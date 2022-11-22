@@ -30,53 +30,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
         <ul>
         <details><summary><b>Segmentation based</b></summary>
           <ul>
- <li><a href="./configs/pp_liteseg">PP-LiteSeg</a> </li>
-            <li><a href="./configs/deeplabv3p">DeepLabV3P</a> </li>
-            <li><a href="./configs/ocrnet">OCRNet</a> </li>
-            <li><a href="./configs/mobileseg">MobileSeg</a> </li>
-            <li><a href="./configs/ann">ANN</a></li>
-            <li><a href="./configs/attention_unet">Att U-Net</a></li>
-            <li><a href="./configs/bisenetv1">BiSeNetV1</a></li>
-            <li><a href="./configs/bisenet">BiSeNetV2</a></li>
-            <li><a href="./configs/ccnet">CCNet</a></li>
-            <li><a href="./configs/danet">DANet</a></li>
-            <li><a href="./configs/ddrnet">DDRNet</a></li>
-            <li><a href="./configs/decoupled_segnet">DecoupledSeg</a></li>
-            <li><a href="./configs/deeplabv3">DeepLabV3</a></li>
-            <li><a href="./configs/dmnet">DMNet</a></li>
-            <li><a href="./configs/dnlnet">DNLNet</a></li>
-            <li><a href="./configs/emanet">EMANet</a></li>
-            <li><a href="./configs/encnet">ENCNet</a></li>
-            <li><a href="./configs/enet">ENet</a></li>
-            <li><a href="./configs/espnetv1">ESPNetV1</a></li>
-            <li><a href="./configs/espnet">ESPNetV2</a></li>
-            <li><a href="./configs/fastfcn">FastFCN</a></li>
-            <li><a href="./configs/fastscnn">Fast-SCNN</a></li>
-            <li><a href="./configs/gcnet">GCNet</a></li>
-            <li><a href="./configs/ginet">GINet</a></li>
-            <li><a href="./configs/glore">GloRe</a></li>
-            <li><a href="./configs/gscnn">GSCNN</a></li>
-            <li><a href="./configs/hardnet">HarDNet</a></li>
-            <li><a href="./configs/fcn">HRNet-FCN</a></li>
-            <li><a href="./configs/hrnet_w48_contrast">HRNet-Contrast</a></li>
-            <li><a href="./configs/isanet">ISANet</a></li>
-            <li><a href="./configs/pfpn">PFPNNet</a></li>
-            <li><a href="./configs/pointrend">PointRend</a></li>
-            <li><a href="./configs/portraitnet">PotraitNet</a></li>
-            <li><a href="./configs/pp_humanseg_lite">PP-HumanSeg-Lite</a></li>
-            <li><a href="./configs/pspnet">PSPNet</a></li>
-            <li><a href="./configs/pssl">PSSL</a></li>
-            <li><a href="./configs/segformer">SegFormer</a></li>
-            <li><a href="./configs/segmenter">SegMenter</a></li>
-            <li><a href="./configs/segmne">SegNet</a></li>
-            <li><a href="./configs/setr">SETR</a></li>
-            <li><a href="./configs/sfnet">SFNet</a></li>
-            <li><a href="./configs/stdcseg">STDCSeg</a></li>
-            <li><a href="./configs/u2net">U<sup>2</sup>Net</a></li>
-            <li><a href="./configs/unet">UNet</a></li>
-            <li><a href="./configs/unet_plusplus">UNet++</a></li>
-            <li><a href="./configs/unet_3plus">UNet3+</a></li>
-            <li><a href="./configs/upernet">UperNet</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/model/scnn.py">SCNN</a> </li>
           </ul>
         </details>
         <details><summary><b>Keypoint based</b></summary>
@@ -134,8 +88,8 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
       <td>
         <details><summary><b>Datasets</b></summary>
           <ul>
-            <li><a href="./datasets/tu_simple.py">Tusimple</a></li>  
-            <li><a href="./datasets/culane.py">CULane</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/dataset/tu_simple.py">Tusimple</a></li>  
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/dataset/culane.py">CULane</a></li>
           </ul>
         </details>
         <details><summary><b>Data Augmentation(Paddleseg)</b></summary>
