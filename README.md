@@ -35,14 +35,10 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
         </details>
         <details><summary><b>Keypoint based</b></summary>
           <ul>
-            <li><a href="./EISeg">EISeg</a></li>
-            <li>RITM</li>
-            <li>EdgeFlow</li>
           </ul>
         </details>
         <details><summary><b>GAN based</b></summary>
           <ul>
-            <li><a href="./contrib/PanopticDeepLab/README_CN.md">Panoptic-DeepLab</a></li>
           </ul>
         </details>
       </td>
