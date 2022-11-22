@@ -18,7 +18,7 @@ If you find our project useful in your research, please consider citing:
     title={PPlanedet, A development Toolkit for lane detection based on PaddlePaddle},
     author={Kunyang Zhou},
     howpublished = {\url{https://github.com/zkyseu/PPlanedet}},
-    year={2019}
+    year={2022}
 }
 ```
     
