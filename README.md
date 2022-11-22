@@ -6,8 +6,10 @@ If you do not have enough compute resource, we recommend that you can run our pr
 
 ## News 
 <ul class="nobull">
-  <li>[2022-11-22] :fire: we release the code. We now only reproduce the <a href="https://arxiv.org/pdf/1712.06080.pdf">SCNN</a> with 93.70% accuracy in Tusimple dataset. Pretrain model will be updated in the following days.
-    
+  <li>[2022-11-22] :fire: we release the project code. We now only reproduce the <a href="https://arxiv.org/pdf/1712.06080.pdf">SCNN</a> with 93.70% accuracy in Tusimple dataset. Pretrain model will be updated in the following days. We will also release the eval and demo code in the following days
+
+</ul>
+
 ## Citation
 If you find our project useful in your research, please consider citing:
     
