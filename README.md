@@ -118,6 +118,8 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
   </tbody>
 </table>
 
+## Tutorials(will be updated in the following days)
+
 ## License
 
 PPlanedet is released under the [MIT license](LICENSE). We only allow you to use our project for academic uses.
