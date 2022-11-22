@@ -1,4 +1,4 @@
-# PPlanedet: A development Toolkit for lane detection based on PaddlePaddle
+# PPlanedet: A Toolkit for lane detection based on PaddlePaddle
 
 In this project, we develop a toolkit for lane detection to facilitate research. Especially, PPlanedet is built upon [Paddleseg](https://github.com/PaddlePaddle/PaddleSeg) which is a development Toolkit for segmentation based on PaddlePaddle.
 
@@ -132,7 +132,7 @@ If you find our project useful in your research, please consider citing:
     
 ```latex
 @misc{PPlanedet,
-    title={PPlanedet, A development Toolkit for lane detection based on PaddlePaddle},
+    title={PPlanedet, A Toolkit for lane detection based on PaddlePaddle},
     author={Kunyang Zhou},
     howpublished = {\url{https://github.com/zkyseu/PPlanedet}},
     year={2022}
