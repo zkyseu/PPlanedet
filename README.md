@@ -30,7 +30,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
         <ul>
         <details><summary><b>Segmentation based</b></summary>
           <ul>
-            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/model/scnn.py">SCNN</a> </li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/model/scnn.py">SCNN</a></li>
           </ul>
         </details>
         <details><summary><b>Keypoint based</b></summary>
