@@ -14,7 +14,7 @@ If you find our project useful in your research, please consider citing:
 ```latex
 @misc{PPlanedet,
     title={PPlanedet, A development Toolkit for lane detection based on PaddlePaddle},
-    author={kunyang zhou},
+    author={Kunyang Zhou},
     howpublished = {\url{https://github.com/zkyseu/PPlanedet}},
     year={2019}
 }
