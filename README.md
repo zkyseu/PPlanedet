@@ -1,3 +1,3 @@
-# PPlanedet: A library for lane detection with PaddlePaddle
+# PPlanedet: A development Toolkit for lane detection based on PaddlePaddle
 
-In this repo, we develop a library for lane detection to facilitate research. Especially, PPlanedet is built upon [Paddleseg](https://github.com/PaddlePaddle/PaddleSeg) which is a library for segmentation with PaddlePaddle.
+In this repo, we develop a toolkit for lane detection to facilitate research. Especially, PPlanedet is built upon [Paddleseg](https://github.com/PaddlePaddle/PaddleSeg) which is a development Toolkit for segmentation based on PaddlePaddle.
