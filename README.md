@@ -95,18 +95,18 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
       <td>
         <details><summary><b>Backbones</b></summary>
           <ul>
-            <li><a href="./paddleseg/models/backbones/hrnet.py">HRNet</a></li>
-            <li><a href="./paddleseg/models/backbones/resnet_cd.py">ResNet</a></li>
-            <li><a href="./paddleseg/models/backbones/stdcnet.py">STDCNet</a></li>
-            <li><a href="./paddleseg/models/backbones/mobilenetv2.py">MobileNetV2</a></li>
-            <li><a href="./paddleseg/models/backbones/mobilenetv3.py">MobileNetV3</a></li>
-            <li><a href="./paddleseg/models/backbones/shufflenetv2.py">ShuffleNetV2</a></li>
-            <li><a href="./paddleseg/models/backbones/ghostnet.py">GhostNet</a></li>
-            <li><a href="./paddleseg/models/backbones/lite_hrnet.py">LiteHRNet</a></li>
-            <li><a href="./paddleseg/models/backbones/xception_deeplab.py">XCeption</a></li>
-            <li><a href="./paddleseg/models/backbones/vision_transformer.py">VIT</a></li>
-            <li><a href="./paddleseg/models/backbones/mix_transformer.py">MixVIT</a></li>
-            <li><a href="./paddleseg/models/backbones/swin_transformer.py">Swin Transformer</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/hrnet.py">HRNet</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/resnet_cd.py">ResNet</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/stdcnet.py">STDCNet</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/mobilenetv2.py">MobileNetV2</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/mobilenetv3.py">MobileNetV3</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/shufflenetv2.py">ShuffleNetV2</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/ghostnet.py">GhostNet</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/lite_hrnet.py">LiteHRNet</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/xception_deeplab.py">XCeption</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/vision_transformer.py">VIT</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/mix_transformer.py">MixVIT</a></li>
+            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/swin_transformer.py">Swin Transformer</a></li>
           </ul>
         </details>
         <details><summary><b>Losses</b></summary>
@@ -134,20 +134,8 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
       <td>
         <details><summary><b>Datasets</b></summary>
           <ul>
-            <li><a href="./paddleseg/datasets/ade.py">ADE20K</a></li>  
-            <li><a href="./paddleseg/datasets/cityscapes.py">Cityscapes</a></li>
-            <li><a href="./paddleseg/datasets/cocostuff.py">COCO Stuff</a></li>
-            <li><a href="./paddleseg/datasets/voc.py">Pascal VOC</a></li>
-            <li><a href="./paddleseg/datasets/eg1800.py">EG1800</a></li>
-            <li><a href="./paddleseg/datasets/pascal_context.py">Pascal Context</a></li>  
-            <li><a href="./paddleseg/datasets/supervisely.py">SUPERVISELY</a></li>
-            <li><a href="./paddleseg/datasets/optic_disc_seg.py">OPTIC DISC SEG</a></li>
-            <li><a href="./paddleseg/datasets/chase_db1.py">CHASE_DB1</a></li>
-            <li><a href="./paddleseg/datasets/hrf.py">HRF</a></li>
-            <li><a href="./paddleseg/datasets/drive.py">DRIVE</a></li>
-            <li><a href="./paddleseg/datasets/stare.py">STARE</a></li>
-            <li><a href="./paddleseg/datasets/pp_humanseg14k.py">PP-HumanSeg14K</a></li>
-            <li><a href="./paddleseg/datasets/pssl.py">PSSL</a></li>
+            <li><a href="./datasets/tu_simple.py">Tusimple</a></li>  
+            <li><a href="./datasets/culane.py">CULane</a></li>
           </ul>
         </details>
         <details><summary><b>Data Augmentation(Paddleseg)</b></summary>
