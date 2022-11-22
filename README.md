@@ -126,6 +126,7 @@ PPlanedet is released under the [MIT license](LICENSE). We only allow you to use
 
 ## Acknowledgement
 * Thanks [Paddleseg](https://github.com/PaddlePaddle/PaddleSeg) for codebase.
+* Some codes are borrowed from [lanedet](https://github.com/Turoad/lanedet).
 
 ## Citation
 If you find our project useful in your research, please consider citing:
