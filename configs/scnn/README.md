@@ -21,3 +21,15 @@ python train.py \
         --save_dir output
 ```
 
+```shell
+# training on multi-GPU
+export CUDA_VISIBLE_DEVICES=0,1,2,3
+python -m paddle.distributed.launch train.py \
+        --config configs/scnn/resnet50_tusimple.yaml \
+        --do_eval \
+        --use_vdl \
+        --save_interval 1000 \
+        --num_workers 4 \
+        --save_dir output
+```
+
