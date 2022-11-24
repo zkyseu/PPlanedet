@@ -42,5 +42,5 @@ lr_scheduler:
 loss:
   types:
     - type: CrossEntropyLoss
-      weight: [0.4,1.,1.,1.,1.,1.,1.]
+      weight: [0.4,1.,1.,1.,1.]
   coef: [1]
