@@ -38,5 +38,5 @@ python -m paddle.distributed.launch train.py \
 # testing on single-GPU
 python val.py \
        --config configs/scnn/resnet50_culane.yaml \
-       --model_path your model path
+       --model_path /home/aistudio/181144/pplandet/output/best_model/model.pdparams #please change to your model path
 ```
