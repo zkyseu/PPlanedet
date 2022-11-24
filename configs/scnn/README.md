@@ -6,4 +6,4 @@ Convolutional neural networks (CNNs) are usually built by stacking convolutional
 ## Model List
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
-| SCNN       | ResNet18 | Tusimple |acc: 96.05| [config](https://github.com/zkyseu/PPlanedet/blob/main/configs/scnn/resnet50_tusimple.yaml)  | [model](https://github.com/Turoad/lanedet/releases/download/1.0/scnn_r18_tusimple.zip)|
+| SCNN       | ResNet18 | Tusimple |acc: 96.05| [config](https://github.com/zkyseu/PPlanedet/blob/main/configs/scnn/resnet50_tusimple.yaml)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/untagged-636af7b8c78f9dc6a2b5/model.pdparams)|
