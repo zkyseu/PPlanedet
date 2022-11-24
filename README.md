@@ -131,10 +131,53 @@ conda install paddlepaddle-gpu==2.3.2 cudatoolkit=10.2 --channel https://mirrors
 pip install paddleseg
 ```
 
-### step2 Install requirements
+### step3 Install requirements
 ```Shell
 cd pplandet/
 pip install -r requirements.txt
+```
+
+## Data preparation
+### CULane
+
+Download [CULane](https://xingangpan.github.io/projects/CULane.html). Then extract them to `$CULANEROOT`. Create link to `data` directory.
+
+```Shell
+cd $LANEDET_ROOT
+mkdir -p data
+ln -s $CULANEROOT data/CULane
+```
+
+For CULane, you should have structure like this:
+```
+$CULANEROOT/driver_xx_xxframe    # data folders x6
+$CULANEROOT/laneseg_label_w16    # lane segmentation labels
+$CULANEROOT/list                 # data lists
+```
+
+### Tusimple
+Download [Tusimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). Then extract them to `$TUSIMPLEROOT`. Create link to `data` directory.
+
+```Shell
+cd $LANEDET_ROOT
+mkdir -p data
+ln -s $TUSIMPLEROOT data/tusimple
+```
+
+For Tusimple, you should have structure like this:
+```
+$TUSIMPLEROOT/clips # data folders
+$TUSIMPLEROOT/lable_data_xxxx.json # label json file x4
+$TUSIMPLEROOT/test_tasks_0627.json # test tasks json file
+$TUSIMPLEROOT/test_label.json # test label json file
+
+```
+
+For Tusimple, the segmentation annotation is not provided, hence we need to generate segmentation from the json annotation. 
+
+```Shell
+python tools/generate_seg_tusimple.py --root $TUSIMPLEROOT
+# this will generate seg_label directory
 ```
 
 ## License
