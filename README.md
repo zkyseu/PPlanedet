@@ -30,7 +30,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
         <ul>
         <details><summary><b>Segmentation based</b></summary>
           <ul>
-            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/model/scnn.py">SCNN</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a></li>
           </ul>
         </details>
         <details><summary><b>Keypoint based</b></summary>
@@ -179,6 +179,44 @@ For Tusimple, the segmentation annotation is not provided, hence we need to gene
 python tools/generate_seg_tusimple.py --root $TUSIMPLEROOT
 # this will generate seg_label directory
 ```
+
+## Getting Started
+### Training
+
+For training, run
+```Shell
+# training on single-GPU
+export CUDA_VISIBLE_DEVICES=0
+python train.py \
+        --config configs/scnn/resnet50_tusimple.yaml \
+        --do_eval \
+        --use_vdl \
+        --save_interval 1000 \
+        --num_workers 4 \
+        --save_dir output
+```
+
+```Shell
+# training on multi-GPU
+export CUDA_VISIBLE_DEVICES=0,1,2,3
+python -m paddle.distributed.launch train.py \
+        --config configs/scnn/resnet50_tusimple.yaml \
+        --do_eval \
+        --use_vdl \
+        --save_interval 1000 \
+        --num_workers 4 \
+        --save_dir output
+```
+
+### Testing
+For testing, run
+```Shell
+python val.py \
+       --config configs/scnn/resnet50_culane.yaml \
+       --model_path /home/aistudio/181144/pplandet/output/best_model/model.pdparams #please change to your model path
+```
+
+### Inference/Demo(coming soon)
 
 ## License
 
