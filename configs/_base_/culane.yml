@@ -1,0 +1,46 @@
+batch_size: 8
+iters: 80000
+
+train_dataset:
+  type: CULane
+  data_root: /home/aistudio/data
+  split: train
+  cut_height: 240
+  ori_w_h: [590,1640]
+  test_json_file: /home/aistudio/data/test_label.json
+  transforms:
+    - type: RandomRotation
+      max_rotation: 2
+    - type: RandomHorizontalFlip
+    - type: Resize
+      target_size: [800,288]
+    - type: Normalize
+
+val_dataset:
+  type: CULane
+  data_root: /home/aistudio/data
+  split: test
+  cut_height: 240
+  ori_w_h: [590,1640]
+  test_json_file: /home/aistudio/data/test_label.json
+  transforms:
+    - type: Resize
+      target_size: [800,288]
+    - type: Normalize
+
+optimizer:
+  type: sgd
+  momentum: 0.9
+  weight_decay: 1.0e-4
+
+lr_scheduler:
+  type: PolynomialDecay
+  learning_rate: 0.005
+  end_lr: 0
+  power: 0.9
+
+loss:
+  types:
+    - type: CrossEntropyLoss
+      weight: [0.4,1.,1.,1.,1.,1.,1.]
+  coef: [1]
