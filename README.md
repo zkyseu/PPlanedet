@@ -129,6 +129,7 @@ conda install paddlepaddle-gpu==2.3.2 cudatoolkit=10.2 --channel https://mirrors
 ### step2 Install paddleseg
 ```Shell
 pip install paddleseg
+# pip install git+"https://github.com/PaddlePaddle/PaddleSeg"
 ```
 
 ### step3 Install requirements
