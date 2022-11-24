@@ -61,6 +61,9 @@ class BaseDataset(Dataset):
         data.update({"img":sample["img"]})
         if self.training:
             data.update({'label':sample["label"]})
+            if 'lane_exist' in sample.keys():
+                data.update({'exist_lane_num':sample['lane_exist']})
+
         # print(sample)
         # meta = DC(meta, cpu_only=True)
         # sample.update({'meta': meta})
