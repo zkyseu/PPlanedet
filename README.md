@@ -119,7 +119,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
 </table>
 
 ## Installation
-### step 1 Install PaddlePaddle(you can refer to [official](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
+### step 1 Install PaddlePaddle(you can refer to [official documentation](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
 ```Shell
 conda create -n pplanedet python=3.8 -y
 conda activate pplanedet
