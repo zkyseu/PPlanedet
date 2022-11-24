@@ -131,6 +131,12 @@ conda install paddlepaddle-gpu==2.3.2 cudatoolkit=10.2 --channel https://mirrors
 pip install paddleseg
 ```
 
+### step2 Install requirements
+```Shell
+cd pplandet/
+pip install -r requirements.txt
+```
+
 ## License
 
 PPlanedet is released under the [MIT license](LICENSE). We only allow you to use our project for academic uses.
