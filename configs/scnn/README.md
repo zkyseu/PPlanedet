@@ -33,3 +33,10 @@ python -m paddle.distributed.launch train.py \
         --save_dir output
 ```
 
+## Model evaluation
+```shell
+# testing on single-GPU
+python val.py \
+       --config configs/scnn/resnet50_culane.yaml \
+       --model_path your model path
+```
