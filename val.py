@@ -41,6 +41,12 @@ def parse_args():
         type=str,
         default=None)
     parser.add_argument(
+        '--predict_path',
+        dest='predict_path',
+        help='The path of model for evaluation',
+        type=str,
+        default=None)
+    parser.add_argument(
         '--num_workers',
         dest='num_workers',
         help='Num workers for data loader',
@@ -171,11 +177,9 @@ def main(args):
         logger.info('Loaded trained params of model successfully')
 
     test_config = get_test_config(cfg, args)
+    config_check(cfg, val_dataset=val_dataset)
 
-    # config_check(cfg, val_dataset=val_dataset)
-
-
-    evaluate(model, val_dataset, work_dir = '/home/aistudio/data/predict',batch_size = args.batch_size,num_workers=args.num_workers, **test_config)
+    evaluate(model, val_dataset, work_dir = args.predict_path,batch_size = args.batch_size,num_workers=args.num_workers, **test_config)
 
 
 if __name__ == '__main__':
