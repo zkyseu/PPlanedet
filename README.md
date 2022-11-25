@@ -135,7 +135,6 @@ pip install paddleseg
 
 ### step3 Install requirements
 ```Shell
-cd pplandet/
 pip install -r requirements.txt
 ```
 
