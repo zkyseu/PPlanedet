@@ -135,6 +135,7 @@ pip install paddleseg
 
 ### step3 Install requirements
 ```Shell
+cd PPlanedet
 pip install -r requirements.txt
 ```
 
