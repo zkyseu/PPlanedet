@@ -105,11 +105,7 @@ def predict(model,
                 except:
                     logit = model(data['img'])[0]
                 logit = reverse_transform(logit, data['trans_info'], mode='bilinear')
-                logs = F.softmax(logit,axis = 1)
-                conf = paddle.max(logs,axis = 1,keepdim=True)
                 pred = paddle.argmax(logit, axis=1, keepdim=True, dtype='int32')
-                print(paddle.unique(pred))
-                print('\n')
 #                pred[conf<0.5] = 0
 #                if "exist" in output.keys():
 #                    _ = pred.pop("exist")
