@@ -6,7 +6,8 @@ If you do not have enough compute resource, we recommend that you can run our pr
 
 ## News 
 <ul class="nobull">
-  <li>[2022-11-24] :fire: we release the evaluation code and pretrain weight of the <a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a> in Tusimple dataset. We also update the Installation and training documentations of our project. In the following days, we will upload Inference/demo code and pretrain weight of SCNN in CULane dataset. Meanwhile, we will reproduce ERFNet.
+  <li>[2022-12-4] :fire: we release the predict/demo code. You can directly test our model. 
+  <li>[2022-11-24] : we release the evaluation code and pretrain weight of the <a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a> in Tusimple dataset. We also update the Installation and training documentations of our project. In the following days, we will upload Inference/demo code and pretrain weight of SCNN in CULane dataset. Meanwhile, we will reproduce ERFNet.
   <li>[2022-11-22] we release the project code. We now only reproduce the SCNN with 93.70% accuracy in Tusimple dataset. Pretrain model will be updated in the following days. We will also release the eval and demo code in the following days.
 
 </ul>
@@ -214,11 +215,18 @@ python -m paddle.distributed.launch train.py \
 For testing, run
 ```Shell
 python val.py \
-       --config configs/scnn/resnet50_culane.yaml \
+       --config configs/scnn/resnet50_tusimple.yaml \
        --model_path /home/aistudio/181144/pplandet/output/best_model/model.pdparams #please change to your model path
 ```
 
-### Inference/Demo(coming soon)
+### Inference/Demo
+```Shell
+python predict.py \
+       --config configs/scnn/resnet50_tusimple.yaml \
+       --model_path your model path
+       --image_path your img path
+       --custom_color 0 50 100 150 200
+```
 
 ## License
 
