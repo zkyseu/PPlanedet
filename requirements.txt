@@ -9,3 +9,8 @@ ftfy
 einops
 paddleseg
 imgaug
+addict
+albumentations
+shapely
+pathspec
+p_tqdm
