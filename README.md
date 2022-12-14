@@ -1,12 +1,13 @@
 # PPlanedet: A Toolkit for lane detection based on PaddlePaddle
 
-In this project, we develop a toolkit for lane detection to facilitate research. Especially, PPlanedet is built upon [Paddleseg](https://github.com/PaddlePaddle/PaddleSeg) which is a development Toolkit for segmentation based on PaddlePaddle.
+In this project, we develop a toolkit for lane detection to facilitate research. Welcome to join us to make this project more perfect and practical.
 
 If you do not have enough compute resource, we recommend that you can run our project at [AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title), which can provide V100 with 32GB memory for free. We also open source the chinese version at AiStudio. Project link is [here](https://aistudio.baidu.com/aistudio/projectdetail/5099135?contributionType=1)
 
 ## News 
 <ul class="nobull">
-  <li>[2022-12-4] :fire: we release the inference/demo code. You can directly test our model. 
+  <li>[2022-12-14] :fire: We release versionv2. Compared with v1, v2 is achieved by Hook instead of being built upon Paddleseg With v2, we can obtain the better SCNN with 95% accuracy on Tusimple dataset. It should be noticed that we only spent 30 epochs to achieve this result. Pretrain weight is available.
+  <li>[2022-12-4] :we release the inference/demo code. You can directly test our model. 
   <li>[2022-11-24] : we release the evaluation code and pretrain weight of the <a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a> in Tusimple dataset. We also update the Installation and training documentations of our project. In the following days, we will upload Inference/demo code and pretrain weight of SCNN in CULane dataset. Meanwhile, we will reproduce ERFNet.
   <li>[2022-11-22] we release the project code. We now only reproduce the SCNN with 93.70% accuracy in Tusimple dataset. Pretrain model will be updated in the following days. We will also release the eval and demo code in the following days.
 
