@@ -1,5 +1,11 @@
-p_tqdm
-shapely
-sklearn
-pathspec
+opencv-python
+pillow>=9.0.1
+tqdm
+visualdl >= 2.2.0
+scipy
+scikit-learn==0.23.2
+regex
+ftfy
+einops
 paddleseg
+imgaug

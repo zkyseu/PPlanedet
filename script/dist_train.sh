@@ -1,0 +1,1 @@
+python -m paddle.distributed.launch tools/train.py -c configs/scnn/resnet50_tusimple.py
