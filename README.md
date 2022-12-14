@@ -7,7 +7,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 ## News 
 <ul class="nobull">
   <li>[2022-12-14] :fire: We release versionv2. Compared with v1, v2 is achieved by Hook instead of being built upon Paddleseg. With v2, we can obtain a better SCNN with 95% accuracy on Tusimple dataset. It should be noticed that we only spent 30 epochs to achieve this result. Pretrain weight is available.
-  <li>[2022-12-4] :we release the inference/demo code. You can directly test our model. 
+  <li>[2022-12-4] : we release the inference/demo code. You can directly test our model. 
   <li>[2022-11-24] : we release the evaluation code and pretrain weight of the <a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a> in Tusimple dataset. We also update the Installation and training documentations of our project. In the following days, we will upload Inference/demo code and pretrain weight of SCNN in CULane dataset. Meanwhile, we will reproduce ERFNet.
   <li>[2022-11-22] we release the project code. We now only reproduce the SCNN with 93.70% accuracy in Tusimple dataset. Pretrain model will be updated in the following days. We will also release the eval and demo code in the following days.
 
@@ -48,15 +48,15 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
       <td>
         <details><summary><b>Backbones</b></summary>
           <ul>
-            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/backbones/resnet_cd.py">ResNet</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/backbones/resnet.py">ResNet</a></li>
           </ul>
         </details>
         <details><summary><b>Losses</b></summary>
           <ul>
-            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/losses/binary_cross_entropy_loss.py">Binary CE Loss</a></li>
-            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/losses/cross_entropy_loss.py">Cross Entropy Loss</a></li>
-            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/losses/focal_loss.py">Focal Loss</a></li>
-            <li><a href="https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.6/paddleseg/models/losses/binary_cross_entropy_loss.py">MultiClassFocal Loss</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/losses/binary_cross_entropy_loss.py">Binary CE Loss</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/losses/cross_entropy_loss.py">Cross Entropy Loss</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/losses/focal_loss.py">Focal Loss</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/losses/focal_loss.py">MultiClassFocal Loss</a></li>
           </ul>
         </details>
         <details><summary><b>Metrics</b></summary>
@@ -70,8 +70,8 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
       <td>
         <details><summary><b>Datasets</b></summary>
           <ul>
-            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/dataset/tu_simple.py">Tusimple</a></li>  
-            <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/dataset/culane.py">CULane</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/datasets/tusimple.py">Tusimple</a></li>  
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/datasets/culane.py">CULane</a></li>
           </ul>
         </details>
         <details><summary><b>Data Augmentation(Paddleseg)</b></summary>
