@@ -193,8 +193,30 @@ python tools/train.py -c configs/scnn/resnet50_tusimple.py \
 ```
 
 ### Inference/Demo
-```Shell
-# Coming soon
+See `tools/detect.py` for detailed information.
+```
+python tools/detect.py --help
+
+usage: detect.py [-h] [--img IMG] [--show] [--savedir SAVEDIR]
+                 [--load_from LOAD_FROM]
+                 config
+
+positional arguments:
+  config                The path of config file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --img IMG             The path of the img (img file or img_folder), for
+                        example: data/*.png
+  --show                Whether to show the image
+  --savedir SAVEDIR     The root of save directory
+  --load_from LOAD_FROM
+                        The path of model
+```
+To run inference on example images in `./images` and save the visualization images in `vis` folder:
+```
+python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
+          --load_from model.pth --savedir ./vis
 ```
 
 ## License
