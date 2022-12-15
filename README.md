@@ -121,7 +121,7 @@ git clone https://github.com/zkyseu/PPlanedet
 ```Shell
 cd PPlanedet
 pip install -r requirements.txt
-python setup.py install
+python setup.py build develop
 # or pip install git+"https://github.com/zkyseu/PPlanedet"
 ```
 
