@@ -165,7 +165,7 @@ For Tusimple, the segmentation annotation is not provided, hence we need to gene
 
 ```Shell
 python tools/generate_seg_tusimple.py --root $TUSIMPLEROOT
-# this will generate seg_label directory
+# python tools/generate_seg_tusimple.py --root /root/paddlejob/workspace/train_data/datasets --savedir /root/paddlejob/workspace/train_data/datasets/seg_label
 ```
 
 ## Getting Started
