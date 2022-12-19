@@ -6,4 +6,4 @@ Modern methods mainly regard lane detection as a problem of pixel-wise segmentat
 ## Models
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
-| UFLD | ResNet18 | Tusimple |acc: 94.78| [config](https://github.com/Turoad/lanedet/blob/main/configs/ufld/resa18_culane.py)  | [model](https://github.com/Turoad/lanedet/releases/download/1.0/ufld_r18_tusimple.zip)|
+| UFLD | ResNet18 | Tusimple |acc: 94.78| [config](https://github.com/Turoad/lanedet/blob/main/configs/ufld/resa18_culane.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/untagged-4c48a4c57af32d89e6b0/epoch_96.pd)|
