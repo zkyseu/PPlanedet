@@ -340,7 +340,8 @@ class Trainer:
             if self.cfg.view:
                 self.val_loader.dataset.view(output, data['meta'])
 
-        out = self.val_loader.dataset.evaluate(predictions, self.cfg.pred_save_dir)   
+        out = self.val_loader.dataset.evaluate(predictions, self.cfg.pred_save_dir) 
+ 
 
         if out > self.best_metric:
             self.best_metric = out
@@ -377,16 +378,4 @@ class Trainer:
             for k, v in state_dict.items():
                 state_dict_['model.' + k] = v
             state_dict = state_dict_
-        self.model.set_state_dict(state_dict)    
-
-
-
-
-
-
-
-
-
-
-
-
+        self.model.set_state_dict(state_dict)   
