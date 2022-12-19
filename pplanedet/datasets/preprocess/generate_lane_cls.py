@@ -3,7 +3,6 @@ import numpy as np
 import cv2
 import os
 import json
-import torchvision
 
 from ..builder import TRANSFORM
 

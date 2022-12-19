@@ -317,22 +317,30 @@ class Trainer:
                 output = self.model(data,mode = 'test')
                 if world_size > 1:
                     seg_list = []
-                    seg = output['seg']
-                    dist.all_gather(seg_list, seg)
-                    seg = paddle.concat(seg_list, 0)
-                    output['seg'] = seg   
+                    if 'seg' in output.keys():
+                        seg = output['seg']
+                        dist.all_gather(seg_list, seg)
+                        seg = paddle.concat(seg_list, 0)
+                        output['seg'] = seg   
+                    else:
+                        seg = output['cls']
+                        dist.all_gather(seg_list, seg)
+                        seg = paddle.concat(seg_list, 0)
+                        output['cls'] = seg                      
                     if 'exist' in output:
                         exists = output['exist']
                         exist_list = []
                         dist.all_gather(exist_list, exists)
                         exists = paddle.concat(exist_list, 0)
                         output['exist'] = exists
-                output = self.model._layers.get_lanes(output)                 
+                    output = self.model._layers.get_lanes(output)  
+                else:
+                    output = self.model.get_lanes(output)             
                 predictions.extend(output)
             if self.cfg.view:
                 self.val_loader.dataset.view(output, data['meta'])
 
-        out = self.val_loader.dataset.evaluate(predictions, self.cfg.output_dir)   
+        out = self.val_loader.dataset.evaluate(predictions, self.cfg.pred_save_dir)   
 
         if out > self.best_metric:
             self.best_metric = out

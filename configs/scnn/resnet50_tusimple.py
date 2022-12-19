@@ -18,15 +18,26 @@ aggregator = dict(
 
 sample_y=range(710, 150, -10)
 
+#heads = dict(
+#    name='LaneSeg',
+#    decoder=dict(name='PlainDecoder'),
+#    thr=0.6,
+#    seg_loss = dict(name = 'CrossEntropyLoss',
+#                   weight = (0.4,1,1,1,1,1,1),
+#                   loss_weight = 1.),
+#    sample_y=sample_y,
+#)
+
 heads = dict(
     name='LaneSeg',
     decoder=dict(name='PlainDecoder'),
     thr=0.6,
-    seg_loss = dict(name = 'CrossEntropyLoss',
-                   weight = (0.4,1,1,1,1,1,1),
+    seg_loss = dict(name = 'MultiClassFocalLoss',
+                   num_class = 6+1,
                    loss_weight = 1.),
     sample_y=sample_y,
 )
+
 
 epochs = 100
 batch_size = 10
@@ -106,6 +117,7 @@ seed =  0
 save_inference_dir = './inference'
 output_dir = './output_dir'
 best_dir = './output_dir/best_dir'
+pred_save_dir = './pred_save'
 num_workers = 4
 num_classes = 6 + 1
 view = False
