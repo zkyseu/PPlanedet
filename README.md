@@ -50,7 +50,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
       <td>
         <details><summary><b>Backbones</b></summary>
           <ul>
-            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/backbones/resnet.py">ResNet</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v3/pplanedet/model/backbones/resnet.py">ResNet</a></li>
           </ul>
         </details>
         <details><summary><b>Losses</b></summary>
