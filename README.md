@@ -250,4 +250,11 @@ model reproduced in our project
   month = {February},  
   year = {2018}  
 }
+
+@InProceedings{qin2020ultra,
+author = {Qin, Zequn and Wang, Huanyu and Li, Xi},
+title = {Ultra Fast Structure-aware Deep Lane Detection},
+booktitle = {The European Conference on Computer Vision (ECCV)},
+year = {2020}
+}
 ```
