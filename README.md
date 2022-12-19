@@ -39,6 +39,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
         </details>
         <details><summary><b>Keypoint based</b></summary>
           <ul>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/ufld">UFLD</a></li>
           </ul>
         </details>
         <details><summary><b>GAN based</b></summary>
