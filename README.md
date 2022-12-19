@@ -76,27 +76,18 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
             <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/datasets/culane.py">CULane</a></li>
           </ul>
         </details>
-        <details><summary><b>Data Augmentation(Paddleseg)</b></summary>
+        <details><summary><b>Data Augmentation</b></summary>
           <ul>
-            <li>Flipping</li>  
+            <li>RandomLROffsetLABEL</li>  
             <li>Resize</li>  
-            <li>ResizeByLong</li>
-            <li>ResizeByShort</li>
-            <li>LimitLong</li>  
-            <li>ResizeRangeScaling</li>  
-            <li>ResizeStepScaling</li>
-            <li>Normalize</li>
-            <li>Padding</li>
-            <li>PaddingByAspectRatio</li>
-            <li>RandomPaddingCrop</li>  
-            <li>RandomCenterCrop</li>
-            <li>ScalePadding</li>
-            <li>RandomNoise</li>  
-            <li>RandomBlur</li>  
+            <li>RandomUDoffsetLABEL</li>
+            <li>RandomCrop</li>
+            <li>CenterCrop</li>  
             <li>RandomRotation</li>  
-            <li>RandomScaleAspect</li>  
-            <li>RandomDistort</li>  
-            <li>RandomAffine</li>  
+            <li>RandomBlur</li>
+            <li>Normalize</li>
+            <li>RandomHorizontalFlip</li>
+            <li>Alaug</li> 
           </ul>
         </details>
       </td>
