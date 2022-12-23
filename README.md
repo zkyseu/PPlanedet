@@ -212,6 +212,13 @@ python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
           --load_from model.pth --savedir ./vis
 ```
 
+If you want to save the visualization of the segmentation results, you can run the following code
+```
+# first you should add 'seg = True' in your config 
+python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
+          --load_from model.pth --savedir ./vis
+```
+
 ## License
 
 PPlanedet is released under the [MIT license](LICENSE). We only allow you to use our project for academic uses.
