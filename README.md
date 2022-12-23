@@ -36,6 +36,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
         <details><summary><b>Segmentation based</b></summary>
           <ul>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a></li>
           </ul>
         </details>
         <details><summary><b>Keypoint based</b></summary>
