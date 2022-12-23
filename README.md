@@ -259,7 +259,7 @@ year = {2020}
 }
 
 @InProceedings{2017ERFNet,
-author = {E. Romera, J.M.Alvarez, L.M.Bergasa and R. Arroyo},
+author = {E.Romera, J.M.Alvarez, L.M.Bergasa and R.Arroyo},
 title = {ERFNet: Efficient Residual Factorized ConvNet for Real-time Semantic Segmentation},
 booktitle = {IEEE Transactions on Intelligent Transportation Systems(T-ITS)},
 year = {2017}
