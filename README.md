@@ -6,7 +6,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 
 ## News 
 <ul class="nobull">
-  <li>[2022-12-29] : We reproduce <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a> and pretrain weight will be released soon. We also fix some bugs in detect.py
+  <li>[2022-12-29] : We reproduce <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a> and pretrain weight is available. We also fix some bugs in detect.py
   <li>[2022-12-23] : We reproduce the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a> and the weight is available. We also support the visualization of the segmentation results and code is shown in <a href="https://github.com/zkyseu/PPlanedet/blob/v3/tools/detect.py">detect.py</a>
   <li>[2022-12-19] :fire: Versionv3 has been released. In this version, we reproduce the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/ufld">UFLD</a> and the pretrain weight is available.
   <li>[2022-12-14] : We release versionv2. Compared with v1, v2 is achieved by Hook instead of being built upon Paddleseg. With v2, we can obtain a better SCNN with 95% accuracy on Tusimple dataset. It should be noticed that we only spent 30 epochs to achieve this result. Pretrain weight is available.
