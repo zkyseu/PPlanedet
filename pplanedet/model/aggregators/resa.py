@@ -78,15 +78,15 @@ class RESA(nn.Layer):
             setattr(self, 'idx_l'+str(i), idx_l)
 
     def forward(self, x):
-        x = x.clone()
-        self.update(x)
+        m = x.clone()
+        self.update(m)
 
         for direction in self.cfg.aggregator.direction:
             for i in range(self.iter):
                 conv = getattr(self, 'conv_' + direction + str(i))
                 idx = getattr(self, 'idx_' + direction + str(i))
                 if direction in ['d', 'u']:
-                    x.set_value(x + self.alpha * F.relu(conv(x[..., idx, :])))
+                    m.add_(self.alpha * F.relu(conv(paddle.index_select(x,idx,axis = 2))))
                 else:
-                    x.set_value(x + self.alpha * F.relu(conv(x[..., idx])))
-        return x
+                    m.add_(self.alpha * F.relu(conv(paddle.index_select(x,idx,axis = 3))))
+        return m
