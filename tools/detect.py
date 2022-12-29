@@ -124,8 +124,6 @@ class Detect(object):
         conf = paddle.max(logit, axis=1, keepdim=True)
 #        logit = reverse_transform(logit, data['trans_info'], mode='bilinear')
         pred = paddle.argmax(logit, axis=1, keepdim=True, dtype='int32')
-        pred[conf<0.6] = 0
-#        print(np.unique(conf[pred!=0]))
         pred = paddle.squeeze(pred)
         pred = pred.cpu().numpy().astype('uint8')
 
