@@ -266,4 +266,11 @@ title = {ERFNet: Efficient Residual Factorized ConvNet for Real-time Semantic Se
 booktitle = {IEEE Transactions on Intelligent Transportation Systems(T-ITS)},
 year = {2017}
 }
+
+@InProceedings{2021RESA,
+author = {Zheng, Tu and Fang, Hao and Zhang, Yi and Tang, Wenjian and Yang, Zheng and Liu, Haifeng and Cai, Deng},
+title = {RESA: Recurrent Feature-Shift Aggregator for Lane Detection},
+booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+year = {2021}
+}
 ```
