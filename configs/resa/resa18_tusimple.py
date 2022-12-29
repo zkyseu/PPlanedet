@@ -117,15 +117,3 @@ num_classes = 6 + 1
 view = False
 ignore_label = 255
 test_json_file='/home/aistudio/data/test_label.json'
-
-
-
-
-
-
-
-
-
-
-
-
