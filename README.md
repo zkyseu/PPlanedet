@@ -102,11 +102,11 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
 </table>
 
 ## Installation
-### step 1 Install PaddlePaddle(you can refer to [official documentation](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
+### step 1 Install PaddlePaddle>=2.4.0(you can refer to [official documentation](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
 ```Shell
 conda create -n pplanedet python=3.8 -y
 conda activate pplanedet
-conda install paddlepaddle-gpu==2.3.2 cudatoolkit=10.2 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/
+conda install paddlepaddle-gpu==2.4.1 cudatoolkit=10.2 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/
 ```
 
 ### step2 Git clone PPlanedet
