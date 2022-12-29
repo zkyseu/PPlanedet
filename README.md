@@ -119,7 +119,6 @@ git clone https://github.com/zkyseu/PPlanedet
 cd PPlanedet
 pip install -r requirements.txt
 python setup.py build develop
-# or pip install git+"https://github.com/zkyseu/PPlanedet"
 ```
 
 ## Data preparation
