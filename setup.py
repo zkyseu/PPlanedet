@@ -27,5 +27,5 @@ setuptools.setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
-    license='Apache 2.0',
+    license='MIT License',
     entry_points={'console_scripts': ['pplanedet=pplanedet.command:main', ]})
