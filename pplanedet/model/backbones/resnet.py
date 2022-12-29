@@ -167,8 +167,9 @@ class ResNetvb(nn.Layer):
         self.layer1 = self._make_layer(block, in_channels[0], layers[0])
         self.layer2 = self._make_layer(block, in_channels[1], layers[1], stride=2,dilate=replace_stride_with_dilation[0])
         self.layer3 = self._make_layer(block, in_channels[2], layers[2], stride=2,dilate=replace_stride_with_dilation[1])
-        if in_channels[3] > 0:
-            self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
+        if len(in_channels) > 3:
+            if in_channels[3] > 0:
+                self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         
         self.expansion = block.expansion
 
