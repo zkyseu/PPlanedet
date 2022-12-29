@@ -6,4 +6,4 @@ Lane detection is one of the most important tasks in self-driving. Due to variou
 ## Model List
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
-| RESA       | ResNet18 | Tusimple |acc: -| [config](https://github.com/zkyseu/PPlanedet/blob/v3/configs/resa/resa18_tusimple.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/RESA/model.pd)|
+| RESA       | ResNet18 | Tusimple |acc: 92.90| [config](https://github.com/zkyseu/PPlanedet/blob/v3/configs/resa/resa18_tusimple.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/RESA/model.pd)|
