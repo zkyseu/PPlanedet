@@ -10,7 +10,7 @@ python tools/train.py -c configs/scnn/resnet50_tusimple.py # please change to yo
 ```
 
 ### 2. Train on multi GPUs
-If you only have more than one gpu, you can run the following codes
+If you have more than one gpu, you can run the following codes
 ```Shell
 # training on single-GPU
 export CUDA_VISIBLE_DEVICES=0,1,2,3
