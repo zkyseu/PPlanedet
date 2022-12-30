@@ -167,7 +167,7 @@ python tools/generate_seg_tusimple.py --root $TUSIMPLEROOT
 ## Getting Started
 ### Training
 
-For training, run(shell scripts are under folder script)
+For training, run(shell scripts are under folder script). More training details are in [documentation](https://github.com/zkyseu/PPlanedet/blob/v3/DOC.md)
 ```Shell
 # training on single-GPU
 export CUDA_VISIBLE_DEVICES=0
