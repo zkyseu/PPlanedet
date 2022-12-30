@@ -25,7 +25,7 @@ export CUDA_VISIBLE_DEVICES=0
 python tools/train.py -c configs/scnn/resnet50_tusimple.py --load pretrain weight path #
 ```
 
-### 4. resume
+### 4. Resume
 If you want to resume the training program, you can run
 ```Shell
 # training on single-GPU
