@@ -25,7 +25,7 @@ aggregator = dict(
 sample_y=range(710, 150, -10)
 heads = dict(
     name='LaneSeg',
-    decoder=dict(name='PlainDecoder'),
+    decoder=dict(name='BUSD'),
     thr=0.6,
     seg_loss = dict(name = 'CrossEntropyLoss',
                    weight = (0.4,1,1,1,1,1,1),
@@ -34,7 +34,7 @@ heads = dict(
 )
 
 epochs = 150
-batch_size = 24
+batch_size = 12
 total_iter = (3616 // batch_size + 1) * epochs 
 
 lr_scheduler = dict(
@@ -75,7 +75,7 @@ val_process = [
 ] 
 
 
-dataset_path = '/home/aistudio/data'
+dataset_path = '/home/fyj/zky/tusimple'
 dataset = dict(
     train=dict(
         name='TuSimple',
@@ -116,4 +116,4 @@ num_workers = 4
 num_classes = 6 + 1
 view = False
 ignore_label = 255
-test_json_file='/home/aistudio/data/test_label.json'
+test_json_file='/home/fyj/zky/tusimple/test_label.json'
