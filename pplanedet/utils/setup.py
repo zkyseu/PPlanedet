@@ -26,9 +26,6 @@ def setup(args, cfg):
             cfg.output_dir,
             os.path.splitext(os.path.basename(str(args.config_file)))[0])
 
-    if args.pretrained:
-        cfg.model.backbone.pretrained = args.pretrained
-
     logger = setup_logger(cfg.output_dir)
 
     logger.info('Configs: {}'.format(cfg))
