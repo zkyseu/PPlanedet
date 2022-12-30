@@ -30,5 +30,5 @@ If you want to resume the training program, you can run
 ```Shell
 # training on single-GPU
 export CUDA_VISIBLE_DEVICES=0
-python tools/train.py -c configs/scnn/resnet50_tusimple.py --resume pretrain weight path #
+python tools/train.py -c configs/scnn/resnet50_tusimple.py --resume weight path #
 ```
