@@ -6,6 +6,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 
 ## News 
 <ul class="nobull">
+  <li>[2023-01-01] : We release the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a>. Version 4 is coming soon.
   <li>[2022-12-29] : We reproduce <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a> and pretrain weight is available. We also fix some bugs in detect.py
   <li>[2022-12-23] : We reproduce the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a> and the weight is available. We also support the visualization of the segmentation results and code is shown in <a href="https://github.com/zkyseu/PPlanedet/blob/v3/tools/detect.py">detect.py</a>
   <li>[2022-12-19] :fire: Versionv3 has been released. In this version, we reproduce the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/ufld">UFLD</a> and the pretrain weight is available.
@@ -39,6 +40,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a></li>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a></li>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a></li>
           </ul>
         </details>
         <details><summary><b>Keypoint based</b></summary>
@@ -271,5 +273,12 @@ author = {Zheng, Tu and Fang, Hao and Zhang, Yi and Tang, Wenjian and Yang, Zhen
 title = {RESA: Recurrent Feature-Shift Aggregator for Lane Detection},
 booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
 year = {2021}
+}
+
+@InProceedings{DeepLabV3+,
+author = {Chen, Liang-Chieh, Yukun Zhu, George Papandreou, Florian Schroff, and Hartwig Adam},
+title = {Encoder-decoder with atrous separable convolution for semantic image segmentation},
+booktitle = {In Proceedings of the European conference on computer vision(ECCV)},
+year = {2018}
 }
 ```
