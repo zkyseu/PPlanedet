@@ -6,7 +6,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 
 ## News 
 <ul class="nobull">
-  <li>[2023-01-01] : We release the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a>. Version 4 is coming soon.
+  <li>[2023-01-01] : We release the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a>. Version 4 is coming soon. We will also open source the Colab demo of the PPLanedet.
   <li>[2022-12-29] : We reproduce <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a> and pretrain weight is available. We also fix some bugs in detect.py
   <li>[2022-12-23] : We reproduce the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a> and the weight is available. We also support the visualization of the segmentation results and code is shown in <a href="https://github.com/zkyseu/PPlanedet/blob/v3/tools/detect.py">detect.py</a>
   <li>[2022-12-19] :fire: Versionv3 has been released. In this version, we reproduce the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/ufld">UFLD</a> and the pretrain weight is available.
