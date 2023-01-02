@@ -2,7 +2,7 @@
 
 In this project, we develop a toolkit for lane detection to facilitate research. Welcome to join us to make this project more perfect and practical.
 
-If you do not have enough compute resource, we recommend that you can run our project at [AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title), which can provide V100(32GB memory) for free. We also open source the chinese version at AiStudio. Project link is [here](https://aistudio.baidu.com/aistudio/projectdetail/5286283?contributionType=1)
+If you do not have enough compute resource, we recommend that you can run our project at [AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title), which can provide you with V100(32GB memory) for free. We also open source the chinese version at AiStudio. Project link is [here](https://aistudio.baidu.com/aistudio/projectdetail/5286283?contributionType=1)
 
 ## News 
 <ul class="nobull">
