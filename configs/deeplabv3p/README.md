@@ -4,4 +4,4 @@ Spatial pyramid pooling module or encode-decoder structure are used in deep neur
 ## Model List
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
-| DeepLabV3+      | ResNet50 | Tusimple |acc: 96.19| [config](https://github.com/zkyseu/PPlanedet/blob/v3/configs/deeplabv3p/resnet50_tusimple.py)  | [model]|
+| DeepLabV3+      | ResNet50 | Tusimple |acc: 96.19| [config](https://github.com/zkyseu/PPlanedet/blob/v3/configs/deeplabv3p/resnet50_tusimple.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/DeepLab/model.pd)|
