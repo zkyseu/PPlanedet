@@ -38,9 +38,3 @@ class Detector(nn.Layer):
     
     def forward(self,batch,mode = 'train'):
         return self.forward_train(batch)
-#        if mode == 'train':
-#            return self.forward_train(batch)
-#        elif mode == 'test':
-#            out = self.forward_train(batch)
-#            out = self.get_lanes(out)
-#            return out
