@@ -85,6 +85,7 @@ class Trainer:
 
     def __init__(self, cfg):
         #self.logger = logger
+        cfg.num_gpus = dist.get_world_size()
         self.logger = logging.getLogger(__name__)
         self.cfg = cfg
         self.output_dir = cfg.output_dir

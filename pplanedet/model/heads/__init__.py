@@ -5,3 +5,4 @@ from .busd import BUSD
 from .lane_cls import LaneCls
 from .erfhead import ERF_head
 from .deeplabhead import DeepLabV3PHead,DeepLabV3SegHead
+from .condlane import CondLaneHead,CtnetHead
