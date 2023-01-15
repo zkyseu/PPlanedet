@@ -6,7 +6,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 
 ## News 
 <ul class="nobull">
-  <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the CondLane, a state-of-the-art lane detection method based on Keypoint and weight is coming soon. Meanwhile, we fixed some bugs in "Alug" augmentation and made the data preprocessing be able to used in Keypoint based method. In order to achieve high performance, we provided RTFormer, a SOTA real-time segmentation Transformer, to facilitate developers to choose the model.
+  <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the CondLane, a state-of-the-art lane detection method based on Keypoint and weight is coming soon. Meanwhile, we fixed some bugs in albumentations and made the albumentations be able to used in Keypoint based method. In order to achieve high performance, we provided RTFormer, a SOTA real-time segmentation Transformer, to facilitate developers to choose the model.
   <li>[2023-01-01] : We released the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a>. Version 4 is coming soon. We will also open source the Colab demo of the PPLanedet.
   <li>[2022-12-29] : We reproduced <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a> and pretrain weight is available. We also fixed some bugs in detect.py
   <li>[2022-12-23] : We reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a> and the weight is available. We also support the visualization of the segmentation results and code is shown in <a href="https://github.com/zkyseu/PPlanedet/blob/v3/tools/detect.py">detect.py</a>
