@@ -6,7 +6,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 
 ## News 
 <ul class="nobull">
-  <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the <a herf="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a>, a state-of-the-art lane detection method based on Keypoint and weight is coming soon. Meanwhile, we fixed some bugs in albumentations and made the albumentations be able to used in Keypoint based method. In order to achieve high performance, we provided RTFormer, a SOTA real-time segmentation Transformer, to facilitate developers to choose the model.
+  <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a>, a state-of-the-art lane detection method based on Keypoint and weight is coming soon. Meanwhile, we fixed some bugs in albumentations and made the albumentations be able to used in Keypoint based method. In order to achieve high performance, we provided <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/rtformer">RTFormer</a>, a SOTA real-time segmentation Transformer, to facilitate developers to choose the model.
   <li>[2023-01-01] : We released the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a>. Version 4 is coming soon. We will also open source the Colab demo of the PPLanedet.
   <li>[2022-12-29] : We reproduced <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a> and pretrain weight is available. We also fixed some bugs in detect.py
   <li>[2022-12-23] : We reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a> and the weight is available. We also support the visualization of the segmentation results and code is shown in <a href="https://github.com/zkyseu/PPlanedet/blob/v3/tools/detect.py">detect.py</a>
@@ -42,11 +42,13 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/main/configs/scnn">SCNN</a></li>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/erfnet">ERFNet</a></li>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/rtformer">RTFormer</a></li>
           </ul>
         </details>
         <details><summary><b>Keypoint based</b></summary>
           <ul>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/ufld">UFLD</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a></li>
           </ul>
         </details>
         <details><summary><b>GAN based</b></summary>
@@ -66,6 +68,7 @@ PPlanedet is developed for lane detection based on PaddlPaddle, which is a high 
             <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/losses/cross_entropy_loss.py">Cross Entropy Loss</a></li>
             <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/losses/focal_loss.py">Focal Loss</a></li>
             <li><a href="https://github.com/zkyseu/PPlanedet/blob/v2/pplanedet/model/losses/focal_loss.py">MultiClassFocal Loss</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/blob/v4/pplanedet/model/losses/regl1_loss.py">RegL1KpLoss</a></li>
           </ul>
         </details>
         <details><summary><b>Metrics</b></summary>
@@ -247,7 +250,7 @@ If you find our project useful in your research, please consider citing:
     
 model reproduced in our project
 ```latex
-@inproceedings{pan2018SCNN,  
+@Inproceedings{pan2018SCNN,  
   author = {Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang},  
   title = {Spatial As Deep: Spatial CNN for Traffic Scene Understanding},  
   booktitle = {AAAI Conference on Artificial Intelligence (AAAI)},  
@@ -262,10 +265,10 @@ booktitle = {The European Conference on Computer Vision (ECCV)},
 year = {2020}
 }
 
-@InProceedings{2017ERFNet,
+@article{2017ERFNet,
 author = {E.Romera, J.M.Alvarez, L.M.Bergasa and R.Arroyo},
 title = {ERFNet: Efficient Residual Factorized ConvNet for Real-time Semantic Segmentation},
-booktitle = {IEEE Transactions on Intelligent Transportation Systems(T-ITS)},
+journal = {IEEE Transactions on Intelligent Transportation Systems(T-ITS)},
 year = {2017}
 }
 
@@ -281,5 +284,19 @@ author = {Chen, Liang-Chieh, Yukun Zhu, George Papandreou, Florian Schroff, and 
 title = {Encoder-decoder with atrous separable convolution for semantic image segmentation},
 booktitle = {In Proceedings of the European conference on computer vision(ECCV)},
 year = {2018}
+}
+
+@InProceedings{CondLaneNet,
+author = {Liu, Lizhe and Chen, Xiaohao and Zhu, Siyu and Tan, Ping},
+title = {CondLaneNet: a Top-to-down Lane Detection Framework Based on Conditional Convolution},
+booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+year = {2021}
+}
+
+@article{RTFormer,
+author = {Wang, Jian, Chenhui Gou, Qiman Wu, Haocheng Feng, Junyu Han, Errui Ding, and Jingdong Wang},
+title = {RTFormer: Efficient Design for Real-Time Semantic Segmentation with Transformer},
+journal = {arXiv preprint arXiv:2210.07124 (2022)},
+year = {2022}
 }
 ```
