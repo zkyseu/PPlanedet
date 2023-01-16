@@ -220,7 +220,7 @@ class CondLanePostProcessor(object):
         mask_softmax = F.softmax(masks, axis=-1)
         row_pos = paddle.sum(
             self.pos[:num_ins] * mask_softmax,
-            dim=2).detach().cpu().numpy().astype(np.int32)
+            axis=2).detach().cpu().numpy().astype(np.int32)
         # row_pos = paddle.argmax(masks, -1).detach().cpu().numpy()
         ranges = paddle.argmax(ranges, 1).detach().cpu().numpy()
         lane_ends = get_range(ranges)
@@ -788,7 +788,8 @@ class CondLaneHead(nn.Layer):
 
 
     def ctdet_decode(self, heat, thr=0.1):
-
+        heat = heat.unsqueeze(0)
+    
         def _nms(heat, kernel=3):
             pad = (kernel - 1) // 2
 
@@ -811,6 +812,7 @@ class CondLaneHead(nn.Layer):
             return ret
 
         heat_nms = _nms(heat)
+        heat_nms = heat_nms.squeeze(0)
         # print(heat.shape, heat_nms.shape)
         heat_nms = heat_nms.transpose((1, 2, 0)).detach().cpu().numpy()
         inds = np.where(heat_nms > thr)
@@ -905,7 +907,7 @@ class CondLaneHead(nn.Layer):
         h_hm, w_hm = f_hm.shape[2:]
         h_mask, w_mask = f_mask.shape[2:]
         hms, params = z['hm'], z['params']
-        hms = paddle.clip(hms.sigmoid(), min=1e-4, max=1 - 1e-4)
+        hms = paddle.clip(F.sigmoid(hms), min=1e-4, max=1 - 1e-4)
         params = params.reshape((m_batchsize, self.num_classes, -1, h_hm, w_hm))
         # with Timer("Elapsed time in two branch: %f"):  # 0.6ms
         mask_branchs = self.mask_branch(f_mask)
@@ -935,13 +937,13 @@ class CondLaneHead(nn.Layer):
             if pos_tensor.shape[0] == 0:
                 seeds = []
             else:
-                mask_params = param[:, :self.num_mask_params].gather(
-                    0, mask_pos_tensor)
+                mask_params = param[:, :self.num_mask_params].take_along_axis(
+                    mask_pos_tensor,0)
                 # with Timer("Elapsed time in mask_head: %f"):  #0.3ms
                 masks = self.mask_head(mask_branch, mask_params, num_ins, idx)
                 if self.regression:
-                    reg_params = param[:, self.num_mask_params:].gather(
-                        0, reg_pos_tensor)
+                    reg_params = param[:, self.num_mask_params:].take_along_axis(
+                        reg_pos_tensor,0)
                     # with Timer("Elapsed time in reg_head: %f"):  # 0.25ms
                     regs = self.reg_head(reg_branch, reg_params, num_ins, idx)
                 else:
