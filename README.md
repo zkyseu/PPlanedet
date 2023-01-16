@@ -19,7 +19,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 </ul>
 
 ## Introduction
-PPlanedet is developed for lane detection based on PaddlPaddle, which is a high performance Deep learning framework. The idea behind the pplanedet is to facilitate researchers who use PaddlePaddle to do research about lane detection. If you have any suggestions about our project, you can contact me.
+PPlanedet is developed for lane detection based on PaddlPaddle. PaddlePaddle is a high performance Deep learning framework. The idea behind the pplanedet is to facilitate researchers who use PaddlePaddle to do research about lane detection. If you have any suggestions about our project, you can contact me.
 
 ## Overview
 
