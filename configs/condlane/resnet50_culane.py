@@ -13,7 +13,7 @@ backbone = dict(
 
 sample_y = range(590, 270, -8)
 
-batch_size = 24
+batch_size = 16
 aggregator = dict(
     name='TransConvEncoderModule',
     in_dim=2048,
@@ -83,8 +83,8 @@ eval_ep = 1
 save_ep = 1 
 
 img_norm = dict(
-    mean=[75.3, 76.6, 77.6],
-    std=[50.5, 53.8, 54.3]
+    mean=[0.295, 0.300, 0.304],
+    std=[0.198, 0.211, 0.213]
 )
 
 img_height = 320 
@@ -190,7 +190,7 @@ val_process = [
     dict(name='ToTensor', keys=['img']),
 ]
 
-dataset_path = '/home/aistudio/data'
+dataset_path = '/root/autodl-tmp/culane'
 dataset = dict(
     train=dict(
         name='CULane',
