@@ -21,6 +21,7 @@ class FPN(nn.Layer):
                  extra_convs_on_inputs=True,
                  relu_before_extra_convs=False,
                  no_norm_on_lateral=False,
+                 attention = False,
                  norm=True,
                  act='relu',
                  upsample_cfg=dict(mode='nearest'),

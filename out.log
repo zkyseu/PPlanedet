@@ -1,0 +1,309 @@
+nohup: ignoring input
+[01/20 11:00:04] pplanedet INFO: Configs: Config (path: configs/clrnet/resnet34_culane.py): {'model': {'name': 'Detector'}, 'backbone': {'name': 'ResNetWrapper', 'resnet': 'resnet34', 'pretrained': True, 'replace_stride_with_dilation': [False, False, False], 'out_conv': False}, 'num_points': 72, 'max_lanes': 4, 'sample_y': range(589, 230, -20), 'featuremap_out_channel': 192, 'heads': {'name': 'CLRHead', 'num_priors': 192, 'refine_layers': 3, 'fc_hidden_dim': 64, 'sample_points': 36, 'seg_decoder': {'name': 'PlainDecoder'}, 'cls_loss': {'name': 'FocalLoss_cls', 'alpha': 0.25}, 'liou_loss': {'name': 'Liou_loss'}, 'ce_loss': {'name': 'CrossEntropyLoss', 'weight': (0.4, 1, 1, 1, 1)}}, 'iou_loss_weight': 2.0, 'cls_loss_weight': 2.0, 'xyt_loss_weight': 0.2, 'seg_loss_weight': 1.0, 'neck': {'name': 'FPN', 'in_channels': [128, 256, 512], 'out_channels': 64, 'num_outs': 3, 'attention': False}, 'test_parameters': {'conf_threshold': 0.4, 'nms_thres': 50, 'nms_topk': 4}, 'epochs': 15, 'batch_size': 48, 'total_iter': 27780, 'lr_scheduler': {'name': 'CosineAnnealingDecay', 'learning_rate': 0.0006, 'T_max': 27780}, 'optimizer': {'name': 'AdamW'}, 'eval_ep': 3, 'save_ep': 15, 'img_norm': {'mean': [103.939, 116.779, 123.68], 'std': [1.0, 1.0, 1.0]}, 'ori_img_w': 1640, 'ori_img_h': 590, 'img_height': 320, 'img_width': 800, 'cut_height': 270, 'train_process': [{'name': 'GenerateCLRLine', 'transforms': [{'name': 'Resize', 'parameters': {'size': {'height': 320, 'width': 800}}, 'p': 1.0}, {'name': 'HorizontalFlip', 'parameters': {'p': 1.0}, 'p': 0.5}, {'name': 'ChannelShuffle', 'parameters': {'p': 1.0}, 'p': 0.1}, {'name': 'MultiplyAndAddToBrightness', 'parameters': {'mul': (0.85, 1.15), 'add': (-10, 10)}, 'p': 0.6}, {'name': 'AddToHueAndSaturation', 'parameters': {'value': (-10, 10)}, 'p': 0.7}, {'name': 'OneOf', 'transforms': [{'name': 'MotionBlur', 'parameters': {'k': (3, 5)}}, {'name': 'MedianBlur', 'parameters': {'k': (3, 5)}}], 'p': 0.2}, {'name': 'Affine', 'parameters': {'translate_percent': {'x': (-0.1, 0.1), 'y': (-0.1, 0.1)}, 'rotate': (-10, 10), 'scale': (0.8, 1.2)}, 'p': 0.7}, {'name': 'Resize', 'parameters': {'size': {'height': 320, 'width': 800}}, 'p': 1.0}]}, {'name': 'ToTensor', 'keys': ['img', 'lane_line', 'seg']}], 'val_process': [{'name': 'GenerateCLRLine', 'transforms': [{'name': 'Resize', 'parameters': {'size': {'height': 320, 'width': 800}}, 'p': 1.0}], 'training': False}, {'name': 'ToTensor', 'keys': ['img']}], 'dataset_path': '/root/autodl-tmp/culane', 'dataset_name': 'CULane', 'dataset': {'train': {'name': 'CULane', 'data_root': '/root/autodl-tmp/culane', 'split': 'train', 'processes': [{'name': 'GenerateCLRLine', 'transforms': [{'name': 'Resize', 'parameters': {'size': {'height': 320, 'width': 800}}, 'p': 1.0}, {'name': 'HorizontalFlip', 'parameters': {'p': 1.0}, 'p': 0.5}, {'name': 'ChannelShuffle', 'parameters': {'p': 1.0}, 'p': 0.1}, {'name': 'MultiplyAndAddToBrightness', 'parameters': {'mul': (0.85, 1.15), 'add': (-10, 10)}, 'p': 0.6}, {'name': 'AddToHueAndSaturation', 'parameters': {'value': (-10, 10)}, 'p': 0.7}, {'name': 'OneOf', 'transforms': [{'name': 'MotionBlur', 'parameters': {'k': (3, 5)}}, {'name': 'MedianBlur', 'parameters': {'k': (3, 5)}}], 'p': 0.2}, {'name': 'Affine', 'parameters': {'translate_percent': {'x': (-0.1, 0.1), 'y': (-0.1, 0.1)}, 'rotate': (-10, 10), 'scale': (0.8, 1.2)}, 'p': 0.7}, {'name': 'Resize', 'parameters': {'size': {'height': 320, 'width': 800}}, 'p': 1.0}]}, {'name': 'ToTensor', 'keys': ['img', 'lane_line', 'seg']}]}, 'val': {'name': 'CULane', 'data_root': '/root/autodl-tmp/culane', 'split': 'test', 'processes': [{'name': 'GenerateCLRLine', 'transforms': [{'name': 'Resize', 'parameters': {'size': {'height': 320, 'width': 800}}, 'p': 1.0}], 'training': False}, {'name': 'ToTensor', 'keys': ['img']}]}, 'test': {'name': 'CULane', 'data_root': '/root/autodl-tmp/culane', 'split': 'test', 'processes': [{'name': 'GenerateCLRLine', 'transforms': [{'name': 'Resize', 'parameters': {'size': {'height': 320, 'width': 800}}, 'p': 1.0}], 'training': False}, {'name': 'ToTensor', 'keys': ['img']}]}}, 'log_config': {'name': 'LogHook', 'interval': 50}, 'custom_config': [{'name': 'EvaluateHook'}], 'device': 'gpu', 'seed': 0, 'save_inference_dir': './inference', 'output_dir': './output_dir/resnet34_culane', 'best_dir': './output_dir/best_dir', 'pred_save_dir': './pred_save', 'num_workers': 4, 'num_classes': 5, 'view': False, 'ignore_label': 255, 'is_train': True, 'timestamp': '-2023-01-20-11-00'}
+[01/20 11:00:04] pplanedet.engine.trainer INFO: train with paddle 2.4.1 on Place(gpu:0) device
+W0120 11:00:04.847489  9045 gpu_resources.cc:61] Please NOTE: device: 0, GPU Compute Capability: 8.6, Driver API Version: 11.7, Runtime API Version: 11.2
+W0120 11:00:04.852766  9045 gpu_resources.cc:91] device: 0, cuDNN Version: 8.1.
+[01/20 11:00:07] pplanedet.engine.trainer INFO: Detector(
+  (backbone): ResNetWrapper(
+    (model): ResNetvb(
+      (conv1): Conv2D(3, 64, kernel_size=[7, 7], stride=[2, 2], padding=3, data_format=NCHW)
+      (bn1): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+      (relu): ReLU()
+      (maxpool): MaxPool2D(kernel_size=3, stride=2, padding=1)
+      (layer1): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        )
+        (1): BasicBlock(
+          (conv1): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        )
+      )
+      (layer2): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2D(64, 128, kernel_size=[3, 3], stride=[2, 2], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(128, 128, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+          (downsample): Sequential(
+            (0): Conv2D(64, 128, kernel_size=[1, 1], stride=[2, 2], data_format=NCHW)
+            (1): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+          )
+        )
+        (1): BasicBlock(
+          (conv1): Conv2D(128, 128, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(128, 128, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2D(128, 128, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(128, 128, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+        )
+        (3): BasicBlock(
+          (conv1): Conv2D(128, 128, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(128, 128, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=128, momentum=0.9, epsilon=1e-05)
+        )
+      )
+      (layer3): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2D(128, 256, kernel_size=[3, 3], stride=[2, 2], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          (downsample): Sequential(
+            (0): Conv2D(128, 256, kernel_size=[1, 1], stride=[2, 2], data_format=NCHW)
+            (1): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          )
+        )
+        (1): BasicBlock(
+          (conv1): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+        )
+        (3): BasicBlock(
+          (conv1): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+        )
+        (4): BasicBlock(
+          (conv1): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+        )
+        (5): BasicBlock(
+          (conv1): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(256, 256, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=256, momentum=0.9, epsilon=1e-05)
+        )
+      )
+      (layer4): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2D(256, 512, kernel_size=[3, 3], stride=[2, 2], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=512, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(512, 512, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=512, momentum=0.9, epsilon=1e-05)
+          (downsample): Sequential(
+            (0): Conv2D(256, 512, kernel_size=[1, 1], stride=[2, 2], data_format=NCHW)
+            (1): BatchNorm2D(num_features=512, momentum=0.9, epsilon=1e-05)
+          )
+        )
+        (1): BasicBlock(
+          (conv1): Conv2D(512, 512, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=512, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(512, 512, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=512, momentum=0.9, epsilon=1e-05)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2D(512, 512, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn1): BatchNorm2D(num_features=512, momentum=0.9, epsilon=1e-05)
+          (relu): ReLU()
+          (conv2): Conv2D(512, 512, kernel_size=[3, 3], padding=1, data_format=NCHW)
+          (bn2): BatchNorm2D(num_features=512, momentum=0.9, epsilon=1e-05)
+        )
+      )
+    )
+  )
+  (neck): FPN(
+    (lateral_convs): LayerList(
+      (0): ConvModule(
+        (_conv): Conv2D(128, 64, kernel_size=[1, 1], data_format=NCHW)
+        (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        (_act_op): Activation(
+          (act_func): ReLU()
+        )
+      )
+      (1): ConvModule(
+        (_conv): Conv2D(256, 64, kernel_size=[1, 1], data_format=NCHW)
+        (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        (_act_op): Activation(
+          (act_func): ReLU()
+        )
+      )
+      (2): ConvModule(
+        (_conv): Conv2D(512, 64, kernel_size=[1, 1], data_format=NCHW)
+        (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        (_act_op): Activation(
+          (act_func): ReLU()
+        )
+      )
+    )
+    (fpn_convs): LayerList(
+      (0): ConvModule(
+        (_conv): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+        (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        (_act_op): Activation(
+          (act_func): ReLU()
+        )
+      )
+      (1): ConvModule(
+        (_conv): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+        (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        (_act_op): Activation(
+          (act_func): ReLU()
+        )
+      )
+      (2): ConvModule(
+        (_conv): Conv2D(64, 64, kernel_size=[3, 3], padding=1, data_format=NCHW)
+        (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        (_act_op): Activation(
+          (act_func): ReLU()
+        )
+      )
+    )
+  )
+  (heads): CLRHead(
+    (prior_embeddings): Embedding(192, 3, sparse=False)
+    (seg_decoder): PlainDecoder(
+      (dropout): Dropout2D(p=0.1, data_format=NCHW)
+      (conv8): Conv2D(192, 5, kernel_size=[1, 1], data_format=NCHW)
+    )
+    (reg_modules): LayerList(
+      (0): Linear(in_features=64, out_features=64, dtype=float32)
+      (1): ReLU()
+      (2): Linear(in_features=64, out_features=64, dtype=float32)
+      (3): ReLU()
+    )
+    (cls_modules): LayerList(
+      (0): Linear(in_features=64, out_features=64, dtype=float32)
+      (1): ReLU()
+      (2): Linear(in_features=64, out_features=64, dtype=float32)
+      (3): ReLU()
+    )
+    (roi_gather): ROIGather(
+      (f_key): ConvModule(
+        (_conv): Conv2D(64, 64, kernel_size=[1, 1], data_format=NCHW)
+        (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+      )
+      (f_query): Sequential(
+        (0): Conv1D(192, 192, kernel_size=[1], groups=192, data_format=NCL)
+        (1): ReLU()
+      )
+      (f_value): Conv2D(64, 64, kernel_size=[1, 1], data_format=NCHW)
+      (W): Conv1D(192, 192, kernel_size=[1], groups=192, data_format=NCL)
+      (resize): FeatureResize()
+      (convs): LayerList(
+        (0): ConvModule(
+          (_conv): Conv2D(64, 48, kernel_size=[9, 1], padding=(4, 0), data_format=NCHW)
+          (_batch_norm): BatchNorm2D(num_features=48, momentum=0.9, epsilon=1e-05)
+        )
+        (1): ConvModule(
+          (_conv): Conv2D(64, 48, kernel_size=[9, 1], padding=(4, 0), data_format=NCHW)
+          (_batch_norm): BatchNorm2D(num_features=48, momentum=0.9, epsilon=1e-05)
+        )
+        (2): ConvModule(
+          (_conv): Conv2D(64, 48, kernel_size=[9, 1], padding=(4, 0), data_format=NCHW)
+          (_batch_norm): BatchNorm2D(num_features=48, momentum=0.9, epsilon=1e-05)
+        )
+      )
+      (catconv): LayerList(
+        (0): ConvModule(
+          (_conv): Conv2D(48, 64, kernel_size=[9, 1], padding=(4, 0), data_format=NCHW)
+          (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        )
+        (1): ConvModule(
+          (_conv): Conv2D(96, 64, kernel_size=[9, 1], padding=(4, 0), data_format=NCHW)
+          (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        )
+        (2): ConvModule(
+          (_conv): Conv2D(144, 64, kernel_size=[9, 1], padding=(4, 0), data_format=NCHW)
+          (_batch_norm): BatchNorm2D(num_features=64, momentum=0.9, epsilon=1e-05)
+        )
+      )
+      (fc): Linear(in_features=2304, out_features=64, dtype=float32)
+      (fc_norm): LayerNorm(normalized_shape=[64], epsilon=1e-05)
+    )
+    (reg_layers): Linear(in_features=64, out_features=76, dtype=float32)
+    (cls_layers): Linear(in_features=64, out_features=2, dtype=float32)
+    (focal_loss): FocalLoss_cls()
+    (liou_loss): Liou_loss()
+    (criterion): CrossEntropyLoss()
+  )
+)
+[01/20 11:00:07] pplanedet.engine.trainer INFO: Number of Parameters is 21.88M.
+[01/20 11:00:07] pplanedet.datasets.base_dataset INFO: Loading CULane annotations...
+/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/multiclass.py:13: DeprecationWarning: Please use `spmatrix` from the `scipy.sparse` namespace, the `scipy.sparse.base` namespace is deprecated.
+  from scipy.sparse.base import spmatrix
+/root/miniconda3/lib/python3.8/site-packages/albumentations/augmentations/geometric/functional.py:8: DeprecationWarning: Please use `gaussian_filter` from the `scipy.ndimage` namespace, the `scipy.ndimage.filters` namespace is deprecated.
+  from scipy.ndimage.filters import gaussian_filter
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:34: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  method='lar', copy_X=True, eps=np.finfo(np.float).eps,
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:164: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  method='lar', copy_X=True, eps=np.finfo(np.float).eps,
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:281: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  eps=np.finfo(np.float).eps, copy_Gram=True, verbose=0,
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:865: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  eps=np.finfo(np.float).eps, copy_X=True, fit_path=True,
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:1121: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  eps=np.finfo(np.float).eps, copy_X=True, fit_path=True,
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:1149: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  eps=np.finfo(np.float).eps, positive=False):
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:1379: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  max_n_alphas=1000, n_jobs=None, eps=np.finfo(np.float).eps,
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:1621: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  max_n_alphas=1000, n_jobs=None, eps=np.finfo(np.float).eps,
+/root/miniconda3/lib/python3.8/site-packages/sklearn/linear_model/_least_angle.py:1755: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  eps=np.finfo(np.float).eps, copy_X=True, positive=False):
+/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/optimize.py:18: DeprecationWarning: Please use `line_search_wolfe2` from the `scipy.optimize` namespace, the `scipy.optimize.linesearch` namespace is deprecated.
+  from scipy.optimize.linesearch import line_search_wolfe2, line_search_wolfe1
+/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/optimize.py:18: DeprecationWarning: Please use `line_search_wolfe1` from the `scipy.optimize` namespace, the `scipy.optimize.linesearch` namespace is deprecated.
+  from scipy.optimize.linesearch import line_search_wolfe2, line_search_wolfe1
+/root/miniconda3/lib/python3.8/site-packages/sklearn/decomposition/_lda.py:28: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  EPS = np.finfo(np.float).eps
+W0120 11:00:23.277019  9045 gpu_resources.cc:217] WARNING: device:  . The installed Paddle is compiled with CUDNN 8.2, but CUDNN version in your machine is 8.1, which may cause serious incompatible bug. Please recompile or reinstall Paddle with compatible CUDNN version.
+[01/20 11:00:27] pplanedet.engine.trainer INFO: Epoch [1/15][0/1851]	lr: 6.000e-04, eta: 2 days, 8:55:49, time: 7.382, data_time: 3.259, loss 1.9694e+01 (1.9694e+01)
+[01/20 11:01:45] pplanedet.engine.trainer INFO: Epoch [1/15][50/1851]	lr: 6.000e-04, eta: 12:51:04, time: 1.669, data_time: 0.254, loss 2.0906e+00 (4.7465e+00)
+[01/20 11:03:00] pplanedet.engine.trainer INFO: Epoch [1/15][100/1851]	lr: 6.000e-04, eta: 12:10:10, time: 1.584, data_time: 0.226, loss 1.5727e+00 (3.3004e+00)
+[01/20 11:04:15] pplanedet.engine.trainer INFO: Epoch [1/15][150/1851]	lr: 6.000e-04, eta: 11:57:04, time: 1.558, data_time: 0.216, loss 1.8134e+00 (2.7718e+00)
+[01/20 11:05:28] pplanedet.engine.trainer INFO: Epoch [1/15][200/1851]	lr: 6.000e-04, eta: 11:44:28, time: 1.534, data_time: 0.212, loss 1.3116e+00 (2.4629e+00)
+[01/20 11:06:41] pplanedet.engine.trainer INFO: Epoch [1/15][250/1851]	lr: 6.000e-04, eta: 11:36:26, time: 1.519, data_time: 0.209, loss 1.4909e+00 (2.2650e+00)

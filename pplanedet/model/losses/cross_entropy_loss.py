@@ -53,6 +53,7 @@ class CrossEntropyLoss(nn.Layer):
         Returns:
             (Tensor): The average loss.
         """
+        
         channel_axis = 1 if self.data_format == 'NCHW' else -1
         if self.weight is not None and logit.shape[channel_axis] != len(
                 self.weight):
@@ -127,3 +128,8 @@ class CrossEntropyLoss(nn.Layer):
 class CrossEntropyLoss_nn(nn.CrossEntropyLoss):
     def __init__(self,cfg,**kwargs):
         super().__init__(**kwargs)
+
+@LOSSES.register()
+class NLLLoss_nn(nn.NLLLoss):
+    def __init__(self,cfg,**kwargs):
+        super.__init__(**kwargs)

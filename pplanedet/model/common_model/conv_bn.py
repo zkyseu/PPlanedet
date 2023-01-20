@@ -12,8 +12,10 @@ class ConvModule(nn.Layer):
                 dilation=1,
                 groups=1,
                 is_vd_mode=False,
+                padding = None,
                 act=None,
                 norm = None,
+                bias = True,
                 data_format='NCHW'):
         super().__init__()
         if dilation != 1 and kernel_size != 3:
@@ -30,16 +32,17 @@ class ConvModule(nn.Layer):
                 padding=0,
                 ceil_mode=True,
                 data_format=data_format)
+        if padding is None:
+            padding = (kernel_size - 1) // 2 if dilation == 1 else dilation
         self._conv = nn.Conv2D(
             in_channels=in_channels,
             out_channels=out_channels,
             kernel_size=kernel_size,
             stride=stride,
-            padding=(kernel_size - 1) // 2 \
-                if dilation == 1 else dilation,
+            padding=padding,
             dilation=dilation,
             groups=groups,
-            bias_attr=False,
+            bias_attr=bias,
             data_format=data_format)
         
         if norm:
