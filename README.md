@@ -5,8 +5,9 @@ In this project, we develop a toolkit for lane detection to facilitate research.
 If you do not have enough compute resource, we recommend that you can run our project at [AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title), which can provide you with V100(32GB memory) for free. We also opened source the chinese version at AiStudio. Project link is [here](https://aistudio.baidu.com/aistudio/projectdetail/5316470?contributionType=1)
 
 ## News 
-If you want to learn more changes, you can refer to 
+If you want to learn more changes, you can refer to [History](https://github.com/zkyseu/PPlanedet/blob/v4/file/change_log.md).
 <ul class="nobull">
+  <li>[2023-01-20] : We released the code of CLRNet.
   <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a>, a state-of-the-art lane detection method based on Keypoint. Meanwhile, we fixed some bugs in albumentations and made the albumentations be able to used in Keypoint based method. In order to facilitate the scientific research, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/rtformer">RTFormer</a>, a SOTA real-time semantic segmentation with Transformer.
 
 
