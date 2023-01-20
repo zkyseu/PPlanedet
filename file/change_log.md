@@ -4,6 +4,7 @@ In this file, we show the development of the PPLanedet.
 
 ## History
 <ul class="nobull">
+  <li>[2023-01-20] : We released the code of CLRNet.
   <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a>, a state-of-the-art lane detection method based on Keypoint. Meanwhile, we fixed some bugs in albumentations and made the albumentations be able to used in Keypoint based method. In order to facilitate the scientific research, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/rtformer">RTFormer</a>, a SOTA real-time semantic segmentation with Transformer.
   <li>[2023-01-01] : We released the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a>. Version 4 is coming soon. We will also open source the Colab demo of the PPLanedet.
   <li>[2022-12-29] : We reproduced <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/resa">RESA</a> and pretrain weight is available. We also fixed some bugs in detect.py
