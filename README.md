@@ -40,10 +40,11 @@ PPlanedet is developed for lane detection based on PaddlPaddle. PaddlePaddle is 
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/rtformer">RTFormer</a></li>
           </ul>
         </details>
-        <details><summary><b>Keypoint based</b></summary>
+        <details><summary><b>Keypoint(anchor) based</b></summary>
           <ul>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/ufld">UFLD</a></li>
             <li><a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/clrnet">CLRNet</a></li>
           </ul>
         </details>
         <details><summary><b>GAN based</b></summary>
