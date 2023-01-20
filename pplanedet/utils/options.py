@@ -2,7 +2,7 @@ import argparse
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='PASSL')
+    parser = argparse.ArgumentParser(description='PPLanedet')
     parser.add_argument(
         '-c', '--config-file', metavar="FILE", help='config file path')
     parser.add_argument(
@@ -28,19 +28,7 @@ def parse_args():
         type=str,
         default=None,
         help='put the path to resuming file if needed')
-    parser.add_argument(
-        '--pretrained',
-        type=str,
-        default=None,
-        help='put the path to pretrained file if needed')
-    parser.add_argument(
-        '--export', type=str, default=None, help='export model for inference')
     # for evaluation
-    parser.add_argument(
-        '--val-interval',
-        type=int,
-        default=1,
-        help='run validation every interval')
     parser.add_argument(
         '--evaluate-only',
         action='store_true',

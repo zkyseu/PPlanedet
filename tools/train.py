@@ -29,11 +29,7 @@ def main(args, cfg):
     if args.evaluate_only:
         trainer.val()
         return
-
-    if args.export:
-        trainer.export(args.export)
-        return
-
+        
     trainer.train()
 
 

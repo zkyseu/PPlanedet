@@ -18,6 +18,7 @@ from ..utils.misc import AverageMeter
 from ..datasets.builder import build_dataloader
 from ..model import build_model
 from ..solver import build_lr_scheduler, build_optimizer
+from ..datasets import IterLoader
 
 def set_hyrbid_parallel_seed(basic_seed,
                              dp_rank,
@@ -34,31 +35,38 @@ def set_hyrbid_parallel_seed(basic_seed,
     tracker.add('global_seed', global_seed)
     tracker.add('local_seed', local_seed)
 
-class IterLoader:
-    def __init__(self, dataloader, epoch=0):
-        self._dataloader = dataloader
-        self.iter_loader = iter(self._dataloader)
-        self._epoch = epoch
+class BaseTrainer:
+    """
+    Trainer class should contains following functions
+    """
+    def __init__(self,):
+        pass
 
-    @property
-    def epoch(self):
-        return self._epoch
+    def add_train_hooks(self,):
+        pass
 
-    def __next__(self):
-        try:
-            data = next(self.iter_loader)
-        except StopIteration:
-            self._epoch += 1
-            self.iter_loader = iter(self._dataloader)
-            data = next(self.iter_loader)
+    def add_custom_hooks(self,):
+        pass
 
-        return data
+    def add_hook(self,):
+        pass
 
-    def __len__(self):
-        return len(self._dataloader)
+    def call_hook(self,):
+        pass
 
+    def train(self,):
+        pass
 
-class Trainer:
+    def val(self,):
+        pass
+
+    def resume(self,):
+        pass
+
+    def load(self,):
+        pass
+
+class Trainer(BaseTrainer):
     r"""
     # trainer calling logic:
     #
@@ -80,7 +88,6 @@ class Trainer:
     #                     |                                    ||
     #                    end                                   \/
 
-    Trainer is modified from https://github.com/PaddlePaddle/PASSL/blob/main/passl/engine/trainer.py
     """
 
     def __init__(self, cfg):
