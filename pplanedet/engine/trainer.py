@@ -37,7 +37,7 @@ def set_hyrbid_parallel_seed(basic_seed,
 
 class BaseTrainer:
     """
-    Trainer class should contains following functions
+    Trainer class should contain following functions
     """
     def __init__(self,):
         pass
