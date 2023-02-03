@@ -214,14 +214,14 @@ optional arguments:
 To run inference on example images in `./images` and save the visualization images in `vis` folder:
 ```
 python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
-          --load_from model.pth --savedir ./vis
+          --load_from model.pd --savedir ./vis
 ```
 
 If you want to save the visualization of the segmentation results, you can run the following code
 ```
 # first you should add 'seg = True' in your config 
 python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
-          --load_from model.pth --savedir ./vis
+          --load_from model.pd --savedir ./vis
 ```
 
 ## License
