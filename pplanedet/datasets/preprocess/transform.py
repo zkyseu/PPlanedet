@@ -4,7 +4,9 @@ import numpy as np
 import paddle
 import numbers
 import collections
-from PIL import Image
+from PIL import Image,ImageFilter
+import paddle.vision.transforms.functional as F
+from paddle.vision import transforms
 
 from ..builder import TRANSFORM
 
@@ -279,6 +281,74 @@ class Normalize(object):
 
         return sample 
 
+
+@TRANSFORM.register()
+class Colorjitters(transforms.ColorJitter):
+    def __init__(self,cfg = None,**kwargs):
+        super().__init__(**kwargs)
+
+    def _apply_image(self, sample):
+        """
+        Args:
+            img (PIL Image): Input image.
+
+        Returns:
+            PIL Image: Color jittered image.
+        """
+        transform = self._get_param(
+            self.brightness, self.contrast, self.saturation, self.hue
+        )
+        sample['img'] = transform(sample['img'])
+        return sample
+
+
+@TRANSFORM.register()
+class RandomErasings(transforms.RandomErasing):
+    def __init__(self,cfg = None,**kwargs):
+        super().__init__(**kwargs)
+    def _apply_image(self, sample):
+        sample['img'] = super()._apply_image(sample['img'])
+        return sample
+
+@TRANSFORM.register()
+class GaussianBlur(object):
+    """
+    Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709
+    Adapted from MoCo:
+    https://github.com/facebookresearch/moco/blob/master/moco/loader.py
+    Note that this implementation does not seem to be exactly the same as
+    described in SimCLR.
+    """
+
+    def __init__(self, kernel_size,sigma=[0.1, 2.0],cfg =None):
+        self.sigma = sigma
+        if isinstance(kernel_size,int):
+            self.kernel_size = (kernel_size,kernel_size)
+        else:
+            self.kernel_size = kernel_size
+
+    def __call__(self, sample):
+        img = sample['img']
+        # sigma = random.uniform(self.sigma[0], self.sigma[1])
+        img = cv2.GaussianBlur(img,ksize=self.kernel_size,sigmaX=self.sigma[0],sigmaY=self.sigma[1])
+        sample['img'] = img
+        return sample
+
+@TRANSFORM.register()
+class RandomGrayScale(object):
+    def __init__(self,p,cfg = None):
+        self.p = p
+    
+    def __call__(self,sample):
+        img = sample['img']
+        v = random.random()
+        H,W,C = img.shape
+        if v < self.p:
+            img = transforms.to_grayscale(img,num_output_channels=C)
+        sample['img'] = img
+
+        return sample  
+  
 def CLRTransforms(img_h, img_w):
     return [
         dict(name='Resize',
