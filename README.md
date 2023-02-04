@@ -93,6 +93,10 @@ PPlanedet is developed for lane detection based on PaddlPaddle. PaddlePaddle is 
             <li>RandomBlur</li>
             <li>Normalize</li>
             <li>RandomHorizontalFlip</li>
+            <li>Colorjitters</li>
+            <li>RandomErasings</li>
+            <li>GaussianBlur</li>
+            <li>RandomGrayScale</li>
             <li>Alaug</li> 
           </ul>
         </details>
