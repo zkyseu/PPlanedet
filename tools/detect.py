@@ -154,7 +154,7 @@ class Detect(object):
 #        data['lanes'],seg = self.inference(data)[0],self.inference(data)[1]
         if self.cfg.show or self.cfg.savedir:
             if not self.cfg.seg:
-                data['lanes'] = self.net.get_lanes(seg)[0]
+                data['lanes'] = self.net.get_lanes(out[1])[0]
                 self.show(data)
             else:
                 self.show_seg(seg,data,image_dir,img_path,)
