@@ -217,6 +217,7 @@ optional arguments:
 ```
 To run inference on example images in `./images` and save the visualization images in `vis` folder:
 ```
+# first you should add 'seg = False' in your config 
 python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
           --load_from model.pd --savedir ./vis
 ```
