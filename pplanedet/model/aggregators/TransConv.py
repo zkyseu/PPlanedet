@@ -146,6 +146,8 @@ class TransConvEncoderModule(nn.Layer):
             src = self.attn_layers(src)
         else:
             for layer, pos in zip(self.attn_layers, self.pos_embeds):
+                if pos.shape[0]!=src.shape[0]:
+                    pos = pos[:src.shape[0],...]
                 src = layer(src, pos)
         # src = self.final_conv(src)
         return src
