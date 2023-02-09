@@ -142,6 +142,7 @@ class TransConvEncoderModule(nn.Layer):
     
     def forward(self, src):
         # src = self.first_conv(src)
+
         if self.pos_shape is None:
             src = self.attn_layers(src)
         else:
