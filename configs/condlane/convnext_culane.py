@@ -5,7 +5,6 @@ model = dict(
 backbone = dict(
     name = 'ConvNeXt',
     dims=[64, 128, 256, 512],
-    pretrain = 'https://passl.bj.bcebos.com/models/convnext_small_1k_224.pdparams',
     out_conv = True
 )
 
