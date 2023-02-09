@@ -130,9 +130,3 @@ class ConvNeXt(nn.Layer):
         if hasattr(self,'out_conv'):
             output[-1] = self.out_conv(output[-1])
         return output
-
-
-if __name__ == '__main__':
-
-    model = paddle.Model(ConvNeXt())
-    model.summary((1,3,224,224))
