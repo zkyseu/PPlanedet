@@ -7,3 +7,6 @@ Modern deep-learning-based lane detection methods are successful in most scenari
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
 | CondLaneNet      | ResNet50 | CULane |F1: 79.69| [config](https://github.com/zkyseu/PPlanedet/blob/v4/configs/condlane/resnet50_culane.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/CondLaneNewt/model.pd)|
+| CondLaneNet|ConvNext|CULane|F1: 75.20| [config]() |
+
+Note: We train CondLaneNet with ConvNexT from scratch. If you want to obtain higher performance with convnext, we suggest that you can load imagenet pretrained weight for convnext.
