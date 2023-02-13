@@ -14,3 +14,4 @@ albumentations
 shapely
 pathspec
 p_tqdm
+yapf
