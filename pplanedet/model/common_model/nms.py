@@ -1,4 +1,3 @@
-
 import paddle
 from paddle import _C_ops, _legacy_C_ops
 
