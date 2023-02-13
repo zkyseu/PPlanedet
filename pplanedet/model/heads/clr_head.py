@@ -7,7 +7,7 @@ import paddle.nn.functional as F
 from ..common_model import ConvModule
 
 from ..lane import Lane
-from ..common_model import multiclass_nms as nms
+from ..common_model import nms
 from ..common_model import assign,ROIGather,LinearModule
 from paddleseg.cvlibs.param_init import constant_init,normal_init
 
@@ -289,6 +289,9 @@ class CLRHead(nn.Layer):
             # end = label_end
             # if the prediction does not start at the bottom of the image,
             # extend its prediction until the x is outside the image
+            if start == 0:
+                start = self.n_strips
+
             mask = ~((((lane_xs[:start] >= 0.) & (lane_xs[:start] <= 1.)
                        ).cpu().numpy()[::-1].cumprod()[::-1]).astype(np.bool))
             lane_xs[end + 1:] = -2
@@ -303,7 +306,7 @@ class CLRHead(nn.Layer):
             if len(lane_xs) <= 1:
                 continue
             points = paddle.stack(
-                (lane_xs.reshape(-1, 1), lane_ys.reshape(-1, 1)),
+                (lane_xs.reshape((-1, 1)), lane_ys.reshape((-1, 1))),
                 axis=1).squeeze(2)
             lane = Lane(points=points.cpu().numpy(),
                         metadata={
@@ -433,6 +436,8 @@ class CLRHead(nn.Layer):
             keep_inds = scores >= threshold
             predictions = predictions[keep_inds]
             scores = scores[keep_inds]
+            category_idxs = paddle.zeros((predictions.shape[0],),dtype="int64")
+            categories = [0]
 
             if predictions.shape[0] == 0:
                 decoded.append([])
@@ -444,13 +449,17 @@ class CLRHead(nn.Layer):
             nms_predictions[...,
                             5:] = nms_predictions[..., 5:] * (self.img_w - 1)
 
-            keep, num_to_keep, _ = nms(
-                nms_predictions,
-                scores,
-                score_threshold=self.cfg.test_parameters.nms_thres,
-                nms_top_k=self.cfg.max_lanes)
-            keep = keep[:num_to_keep]
-            predictions = predictions[keep]
+            if nms_predictions.shape[0]> self.cfg.max_lanes:
+                keep_boxes_idxs,sorted_sub_indices,topk = nms(
+                                    boxes = nms_predictions,
+                                    iou_threshold = self.cfg.test_parameters.nms_thres,
+                                    scores = scores,
+                                    category_idxs = category_idxs,
+                                    categories = categories,
+                                    top_k = self.cfg.max_lanes)
+
+                keep = sorted_sub_indices[:topk]
+                predictions = predictions[keep]
 
             if predictions.shape[0] == 0:
                 decoded.append([])
