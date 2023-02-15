@@ -2,6 +2,15 @@ from paddleseg.models.backbones.resnet_vd import ConvBNLayer
 from paddleseg.cvlibs.param_init import kaiming_normal_init,constant_init
 from paddleseg.models import layers
 import paddle.nn as nn
+import paddle.nn.functional as F
+
+
+class swish(nn.Layer):
+    def __init__(self):
+        super().__init__()
+    def forward(self,x):
+        return x * F.sigmoid(x)
+
 
 class ConvModule(nn.Layer):
     def __init__(self,
