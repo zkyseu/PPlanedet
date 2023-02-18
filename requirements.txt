@@ -10,7 +10,7 @@ einops
 paddleseg
 imgaug
 addict
-albumentations
+albumentations==1.2.1
 shapely
 pathspec
 p_tqdm
