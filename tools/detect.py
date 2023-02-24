@@ -74,7 +74,10 @@ def visualizes(im, result, color_map, save_dir=None, weight=0.6):
 class Detect(object):
     def __init__(self, cfg):
         self.cfg = cfg
-        self.processes = Compose(cfg.val_transform, cfg)
+        if cfg.get('val_transform',False):
+            self.processes = Compose(cfg.val_transform, cfg)
+        else:
+            self.processes = Compose(cfg.val_process, cfg)
         self.net = build_model(self.cfg)
         self.net.eval() 
         load(self.net,cfg.load_from)
