@@ -1,3 +1,4 @@
+import numpy as np
 import paddle
 import paddle.nn as nn
 import paddle.nn.functional as F
@@ -43,3 +44,28 @@ class LayerNorm(nn.Layer):
             x = (x - u) / paddle.sqrt(s + self.epsilon)
             x = self.weight[:, None, None] * x + self.bias[:, None, None]
             return x
+
+def _no_grad_uniform_(tensor, a, b):
+    with paddle.no_grad():
+        tensor.set_value(
+            paddle.uniform(
+                shape=tensor.shape, dtype=tensor.dtype, min=a, max=b))
+    return tensor
+
+def uniform_(tensor, a, b):
+    """
+    Modified tensor inspace using uniform_
+    Args:
+        tensor (paddle.Tensor): paddle Tensor
+        a (float|int): min value.
+        b (float|int): max value.
+    Return:
+        tensor
+    """
+    return _no_grad_uniform_(tensor, a, b)
+
+def conv_init_(module):
+    bound = 1 / np.sqrt(np.prod(module.weight.shape[1:]))
+    uniform_(module.weight, -bound, bound)
+    if module.bias is not None:
+        uniform_(module.bias, -bound, bound)
