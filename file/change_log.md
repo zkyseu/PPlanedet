@@ -4,6 +4,10 @@ In this file, we show the development of the PPLanedet.
 
 ## History
 <ul class="nobull">
+  <li>[2023-02-09] : We updated some common models in pplanedet and released the convnext backbone. In the following days, we will focus on solving bugs in CLRNet. Version5 is coming soon. In version5, more bakcbones will be reproduced. We are doing some researches about bag-of-freebies in lane detection and arxiv paper is under preparing.
+  <li>[2023-02-06] : We fixed some bugs in detect.py and added some data augmentation methods（e.g.GuassianBulr).
+  <li>[2023-01-20] : We released the code of CLRNet. However, there still exists some bugs(NMS cuda code meets error) in CLRNet during inference. We will fix this bug soon.
+  <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a>, a state-of-the-art lane detection method based on Keypoint. Meanwhile, we fixed some bugs in albumentations and made the albumentations be able to used in Keypoint based method. In order to facilitate the scientific research, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/rtformer">RTFormer</a>, a SOTA real-time semantic segmentation with Transformer.
   <li>[2023-01-20] : We released the code of CLRNet.
   <li>[2023-01-16] :fire: We released the version4. In v4, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a>, a state-of-the-art lane detection method based on Keypoint. Meanwhile, we fixed some bugs in albumentations and made the albumentations be able to used in Keypoint based method. In order to facilitate the scientific research, we reproduced the <a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/rtformer">RTFormer</a>, a SOTA real-time semantic segmentation with Transformer.
   <li>[2023-01-01] : We released the <a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/deeplabv3p">DeepLabV3+</a>. Version 4 is coming soon. We will also open source the Colab demo of the PPLanedet.
