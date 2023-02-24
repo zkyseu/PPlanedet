@@ -238,6 +238,12 @@ python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
           --load_from model.pd --savedir ./vis
 ```
 
+### Speed test
+If you want to test the inference speed, you can run the following code. It should be noted that test script is written by python instead of C++, there may exist some difference between official speed and our test speed.
+```
+ python tools/test_speed.py configs/condlane/cspresnet_50_culane.py --model_path output_dir/cspresnet_50_culane/model.pd
+```
+
 ## License
 
 PPlanedet is released under the [MIT license](LICENSE). We only allow you to use our project for academic uses.
