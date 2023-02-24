@@ -7,6 +7,8 @@ If you do not have enough compute resource, we recommend that you can run our pr
 ## News 
 If you want to learn more changes, you can refer to [History](https://github.com/zkyseu/PPlanedet/blob/v4/file/change_log.md).
 <ul class="nobull">
+  <li>[2023-02-24] :fire: We released the version5 of the PPLanedet. In V5, we reproduced more backbones, e.g. CSPResNet,ShuffleNetV2,MobileNetV3 and more GPU-efficient necks like CSPSimSPPF, which is used in YOLOv6. With aforementioned components, we acihieved the state-of-the-art performance on CULane with CondLaneNet.
+Compared with vanilla CondLaneNet, Our CondLaneNet achieve 79.92 F1 score and only contains 11M parameters. CLRNet with ResNet34 reached 79.73 and contains 23M parameters. More details you can find in CondLaneNet config.  
   <li>[2023-02-09] : We updated some common models in pplanedet and released the convnext backbone. In the following days, we will focus on solving bugs in CLRNet. Version5 is coming soon. In version5, more bakcbones will be reproduced. We are doing some researches about bag-of-freebies in lane detection and arxiv paper is under preparing.
   <li>[2023-02-06] : We fixed some bugs in detect.py and added some data augmentation methods（e.g.GuassianBulr).
   <li>[2023-01-20] : We released the code of CLRNet. However, there still exists some bugs(NMS cuda code meets error) in CLRNet during inference. We will fix this bug soon.
