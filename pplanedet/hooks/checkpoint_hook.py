@@ -1,6 +1,7 @@
 import os
 import pickle
 import paddle
+import copy
 
 from .hook import Hook
 from .builder import HOOKS
@@ -83,11 +84,15 @@ class CheckpointHook(Hook):
         filepath = os.path.join(out_dir, filename)
         optimizer = trainer.optimizer if save_optimizer else None
         lr_scheduler = trainer.lr_scheduler
+        use_ema = trainer.use_ema
+        model_weights = copy.deepcopy(trainer.model.state_dict())
+        trainer.model.set_dict(trainer.ema.apply())
         save({
             'epoch': trainer.current_epoch + 1,
-            'state_dict': trainer.model.state_dict(),
+            'state_dict': model_weights,
             'optimizer': optimizer.state_dict(),
-            'lr_scheduler': lr_scheduler.state_dict()
+            'lr_scheduler': lr_scheduler.state_dict(),
+            'ema_model':trainer.model.state_dict() if use_ema else None
         }, filepath)
         # in some environments, `os.symlink` is not supported, you may need to
         # set `create_symlink` to False
@@ -113,13 +118,6 @@ class CheckpointHook(Hook):
             save_optimizer=self.save_optimizer,
             **self.args)
         
-#        if trainer.metric> self.metric:
-#            self.metric = trainer.metric
-#            self.save_checkpoint(
-#                trainer.best_dir,
-#                trainer,
-#                save_optimizer=self.save_optimizer,
-#                **self.args)
         # remove other checkpoints
         if self.max_keep_ckpts > 0:
             filename_tmpl = self.args.get('filename_tmpl', 'epoch_{}.pdparams')
