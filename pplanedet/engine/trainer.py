@@ -14,6 +14,7 @@ from paddle.distributed.fleet.meta_parallel import get_rng_state_tracker
 from paddleseg.utils import logger
 
 from ..hooks import build_hook, Hook
+from ..utils import ModelEMA
 from ..utils.misc import AverageMeter
 from ..datasets.builder import build_dataloader
 from ..model import build_model
@@ -181,6 +182,23 @@ class Trainer(BaseTrainer):
             if amp_cfg['level'] == 'O2':
                 self.model = paddle.amp.decorate(**amp_cfg)  # decorate for level O2
 
+        #whether use ema model
+        self.use_ema = cfg.get('use_ema',False)
+        if self.use_ema:
+            self.logger.info("EMA model is adopted")
+            ema_cfg = cfg.pop("ema")
+            ema_decay = ema_cfg.get('ema_decay', 0.9998)
+            ema_decay_type = ema_cfg.get('ema_decay_type', 'threshold')
+            cycle_epoch = ema_cfg.get('cycle_epoch', -1)
+            ema_black_list = ema_cfg.get('ema_black_list', None)
+            self.ema = ModelEMA(
+                self.model,
+                decay=ema_decay,
+                ema_decay_type=ema_decay_type,
+                cycle_epoch=cycle_epoch,
+                ema_black_list=ema_black_list)
+
+
         # ZeRO
         self.sharding_strategies = cfg.get('sharding', False)
         if self.sharding_strategies:
@@ -298,6 +316,8 @@ class Trainer(BaseTrainer):
                 self.outputs = self.model(data)
             
             self.call_hook('train_iter_end')
+            if self.use_ema:
+                self.ema.update()
 
             if self.current_iter % self.iters_per_epoch == 0:
                 self.call_hook('train_epoch_end')
@@ -364,6 +384,7 @@ class Trainer(BaseTrainer):
 
     def resume(self, checkpoint_path):
         checkpoint = paddle.load(checkpoint_path)
+        ema_model = checkpoint['ema_model']
         if checkpoint.get('epoch', None) is not None:
             self.start_epoch = checkpoint['epoch']
             self.current_epoch = checkpoint['epoch']
@@ -372,6 +393,9 @@ class Trainer(BaseTrainer):
         self.model.set_state_dict(checkpoint['state_dict'])
         self.optimizer.set_state_dict(checkpoint['optimizer'])
         self.lr_scheduler.set_state_dict(checkpoint['lr_scheduler'])
+        #resume ema training
+        if self.use_ema and ema_model is not None:
+            self.ema.resume(ema_model,self.start_epoch-1)            
 
         self.logger.info('Resume training from {} success!'.format(
             checkpoint_path))
