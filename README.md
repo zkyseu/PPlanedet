@@ -8,7 +8,7 @@ If you do not have enough compute resource, we recommend that you can run our pr
 If you want to learn more changes, you can refer to [History](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md).
 <ul class="nobull">
   <li>[2023-02-24] :fire: We released the version5 of the PPLanedet. In V5, we reproduced more backbones and necks like CSPSimSPPF, which is used in YOLOv6. With aforementioned components, we acihieved the state-of-the-art performance on CULane with CondLaneNet.
-Compared with vanilla CondLaneNet, Our CondLaneNet achieve 79.92 F1 score and only contains 11M parameters. CLRNet with ResNet34 reached 79.73 F1 score and contains 23M parameters. More details you can find in CondLaneNet <a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">config</a>.  
+Compared with vanilla CondLaneNet, Our CondLaneNet achieve 79.92 F1 score and only contains 11M parameters. More details you can find in CondLaneNet <a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">config</a>.  
 
 </ul>
 
