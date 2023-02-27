@@ -4,3 +4,4 @@ from .focal_loss import SoftmaxFocalLoss,MultiClassFocalLoss,FocalLoss,FocalLoss
 from .regl1_loss import RegL1KpLoss
 from .condlane_focal import Condlane_focalLoss
 from .line_iou import Liou_loss
+from .relation_loss import ParsingRelationDis,ParsingRelationLoss
