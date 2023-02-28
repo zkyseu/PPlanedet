@@ -85,8 +85,11 @@ class CheckpointHook(Hook):
         optimizer = trainer.optimizer if save_optimizer else None
         lr_scheduler = trainer.lr_scheduler
         use_ema = trainer.use_ema
-        model_weights = copy.deepcopy(trainer.model.state_dict())
-        trainer.model.set_dict(trainer.ema.apply())
+        if use_ema:
+            model_weights = copy.deepcopy(trainer.model.state_dict())
+            trainer.model.set_dict(trainer.ema.apply())
+        else:
+            model_weights = trainer.model.state_dict()
         save({
             'epoch': trainer.current_epoch + 1,
             'state_dict': model_weights,
