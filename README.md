@@ -239,7 +239,7 @@ python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
           --load_from model.pd --savedir ./vis
 ```
 
-### 4、模型检测速度测试
+### 4、测试模型检测速度
 如果你想要测试模型的速度，你可以运行以下的命令。但是需要注意的是测试脚本使用python进行编写并未采用常见的C++，因此测试得到的模型检测速度会低于论文报告的结果，但是也可以用来衡量不同模型间检测速度快慢
 ```
  python tools/test_speed.py configs/condlane/cspresnet_50_culane.py --model_path output_dir/cspresnet_50_culane/model.pd
