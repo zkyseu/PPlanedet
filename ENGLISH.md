@@ -1,31 +1,31 @@
-<font size=4> 简体中文 | [English](ENGLISH.md)
-## 🚀PPLanedet: 基于PaddlePaddle的车道线检测的工具包
+# PPlanedet: A Toolkit for lane detection based on PaddlePaddle
 
-<font size=3> 在这个项目中，我们开发了PPLanedet用于车道线检测。PPLanedet中包含了很多先进的车道线检测算法以方便车道线检测的科学应用。欢迎加入我们来完善PPLanedet。
+In this project, we develop a toolkit for lane detection to facilitate research. Welcome to join us to make this project more perfect and practical.
 
-<font size=3>如果您没有充足的计算资源，我们建议您可以在百度[AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title)上运行PPLanedet。在Aistudio上您可以免费获得V100、A100两种高性能GPU计算资源，我们也在AIstudio上公开了PPLanedet的运行demo，项目链接在[这里](https://aistudio.baidu.com/aistudio/projectdetail/5316470?contributionType=1)
+If you do not have enough compute resource, we recommend that you can run our project at [AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title), which can provide you with V100(32GB memory) for free. We also opened source the chinese version at AiStudio. Project link is [here](https://aistudio.baidu.com/aistudio/projectdetail/5316470?contributionType=1)
 
-## 🆕新闻
-在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
+## News 
+If you want to learn more changes, you can refer to [History](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md).
 <ul class="nobull">
-  <li>[2023-03-01] : 我们修改了PPLanedet中的一些bug，目前CLRNet还在调试中，如果您想获得高性能的车道线检测模型，我们建议您可以使用我们改进的CondLaneNet。
-  <li>[2023-02-24] : 我们发布了PPLanedet的第五个版本(version5)。在V5中，我们复现了更多实用的backbone和Neck等模块(例如YOLOv6中的CSPRepBiFPN、CSPSimSPPF)。依靠这些更加先进的模块，我们得到了一个性能更加的CondLaneNet。改进的CondLaneNet在CULane数据集上达到79.92的F1 score并且参数量只有11M，更多的细节可以参考CondLaneNet的<a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">配置文件</a>。 
+  <li>[2023-02-24] : We fixed some bugs in PPLanedet. CLRNet is still under fixing. If you want to achieve high performance, we recommend that you can try CondLaneNet.
+  <li>[2023-02-24] :fire: We released the version5 of the PPLanedet. In V5, we reproduced more backbones and necks like CSPRepBiFPN, which is used in YOLOv6. With aforementioned components, we achieved the state-of-the-art performance on CULane with CondLaneNet.
+Compared with vanilla CondLaneNet, Our CondLaneNet achieves 79.92 F1 score and only contains 11M parameters. More details you can find in CondLaneNet <a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">config</a>.  
 
 </ul>
 
-## 👀介绍
-PPLanedet是一个基于PaddlePaddle的车道线检测工具包。PaddlePaddle是一种高性能的深度学习框架。PPLanedet开发的初衷是希望科研人员或者工程师能够通过一个框架方便地开发各类车道线检测算法。如果您对PPLanedet有任何疑问或者建议，欢迎和我联系。
+## Introduction
+PPlanedet is developed for lane detection based on PaddlPaddle. PaddlePaddle is a high performance Deep learning framework. The idea behind the pplanedet is to facilitate researchers who use PaddlePaddle to do research about lane detection. If you have any suggestions about our project, you can contact me.
 
-## 🌟框架总览
+## Overview
 
 <table align="center">
   <tbody>
     <tr align="center" valign="bottom">
       <td>
-        <b>模型</b>
+        <b>Models</b>
       </td>
       <td colspan="2">
-        <b>框架组件</b>
+        <b>Components</b>
       </td>
     </tr>
     <tr valign="top">
@@ -117,30 +117,30 @@ PPLanedet是一个基于PaddlePaddle的车道线检测工具包。PaddlePaddle�
   </tbody>
 </table>
 
-## 🛠️安装
-### 步骤1 安装 PaddlePaddle>=2.4.0(如果有疑问可以参考[官方文档](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
+## Installation
+### step 1 Install PaddlePaddle>=2.4.0(you can refer to [official documentation](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
 ```Shell
 conda create -n pplanedet python=3.8 -y
 conda activate pplanedet
 conda install paddlepaddle-gpu==2.4.1 cudatoolkit=10.2 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/
 ```
 
-### 步骤2 Git clone PPlanedet
+### step2 Git clone PPlanedet
 ```Shell
 git clone https://github.com/zkyseu/PPlanedet
 ```
 
-### 步骤3 安装 PPlanedet
+### step3 Install PPlanedet
 ```Shell
 cd PPlanedet
 pip install -r requirements.txt
 python setup.py build develop
 ```
 
-## 📘数据集准备(CULane和Tusimple为例)
+## Data preparation
 ### CULane
 
-下载 [CULane](https://xingangpan.github.io/projects/CULane.html). 接着解压到 `$CULANEROOT`. 创建 `data` 目录.
+Download [CULane](https://xingangpan.github.io/projects/CULane.html). Then extract them to `$CULANEROOT`. Create link to `data` directory.
 
 ```Shell
 cd $LANEDET_ROOT
@@ -148,7 +148,7 @@ mkdir -p data
 ln -s $CULANEROOT data/CULane
 ```
 
-对于CULane数据集, 完成以上步骤你应该有下列数据集结构:
+For CULane, you should have structure like this:
 ```
 $CULANEROOT/driver_xx_xxframe    # data folders x6
 $CULANEROOT/laneseg_label_w16    # lane segmentation labels
@@ -156,7 +156,7 @@ $CULANEROOT/list                 # data lists
 ```
 
 ### Tusimple
-下载 [Tusimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). 然后解压到 `$TUSIMPLEROOT`. 创建 `data` 文件夹.
+Download [Tusimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). Then extract them to `$TUSIMPLEROOT`. Create link to `data` directory.
 
 ```Shell
 cd $LANEDET_ROOT
@@ -164,7 +164,7 @@ mkdir -p data
 ln -s $TUSIMPLEROOT data/tusimple
 ```
 
-对于Tusimple数据集, 完成以上步骤你应该有下列数据集结构:
+For Tusimple, you should have structure like this:
 ```
 $TUSIMPLEROOT/clips # data folders
 $TUSIMPLEROOT/lable_data_xxxx.json # label json file x4
@@ -173,39 +173,39 @@ $TUSIMPLEROOT/test_label.json # test label json file
 
 ```
 
-对于Tusimple数据集，分割地标签并没有提供，因此为了方便分割模型的训练，我们运行下列命令从json文件中生成分割的mask。 
+For Tusimple, the segmentation annotation is not provided, hence we need to generate segmentation from the json annotation. 
 
 ```Shell
 python tools/generate_seg_tusimple.py --root $TUSIMPLEROOT
 # python tools/generate_seg_tusimple.py --root /root/paddlejob/workspace/train_data/datasets --savedir /root/paddlejob/workspace/train_data/datasets/seg_label
 ```
 
-## 💎开始快乐炼丹
-### 1、训练的命令
-对于训练, 运行以下命令(shell脚本在script文件夹下)。更多的训练命令可以参考[documentation](https://github.com/zkyseu/PPlanedet/blob/v3/DOC.md)
+## Getting Started
+### Training
+
+For training, run(shell scripts are under folder script). More training details are in [documentation](https://github.com/zkyseu/PPlanedet/blob/v3/DOC.md)
 ```Shell
 # training on single-GPU
 export CUDA_VISIBLE_DEVICES=0
 python tools/train.py -c configs/scnn/resnet50_tusimple.py
 ```
 
-多卡训练(基于分割的模型可以稳定运行，其他模型训练还不太稳定)
 ```Shell
 # training on multi-GPU
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 python -m paddle.distributed.launch tools/train.py -c configs/scnn/resnet50_tusimple.py
 ```
 
-### 2、测试
-运行以下命令开启模型的测试
+### Testing
+For testing, run
 ```Shell
 python tools/train.py -c configs/scnn/resnet50_tusimple.py \
                       --load /home/fyj/zky/tusimple/new/pplanedet/output_dir/resnet50_tusimple/latest.pd \
                       --evaluate-only 
 ```
 
-### 3、推理/Demo
-想了解更多细节，请参考 `tools/detect.py`.
+### Inference/Demo
+See `tools/detect.py` for detailed information.
 ```
 python tools/detect.py --help
 
@@ -225,36 +225,37 @@ optional arguments:
   --load_from LOAD_FROM
                         The path of model
 ```
-运行以下命令对一个文件夹下的图片进行预测，可视化结果保存在文件夹 `vis`下
+To run inference on example images in `./images` and save the visualization images in `vis` folder:
 ```
 # first you should add 'seg = False' in your config 
 python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
           --load_from model.pd --savedir ./vis
 ```
 
-如果想要获取基于分割的车道线检测模型的分割结果，可以运行以下命令
+If you want to save the visualization of the segmentation results, you can run the following code
 ```
 # first you should add 'seg = True' in your config 
 python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
           --load_from model.pd --savedir ./vis
 ```
 
-### 4、模型检测速度测试
-如果你想要测试模型的速度，你可以运行以下的命令。但是需要注意的是测试脚本使用python进行编写并未采用常见的C++，因此测试得到的模型检测速度会低于论文报告的结果，但是也可以用来衡量不同模型间检测速度快慢
+### Speed test
+If you want to test the inference speed, you can run the following code. It should be noted that test script is written by python instead of C++, there may exist some difference between official speed and our test speed.
 ```
  python tools/test_speed.py configs/condlane/cspresnet_50_culane.py --model_path output_dir/cspresnet_50_culane/model.pd
 ```
 
 ## License
-PPLanedet使用[MIT license](LICENSE)。但是我们仅允许您将PPLanedet用于学术用途。
 
-## 致谢
-* 非常感谢[PASSL](https://github.com/PaddlePaddle/PASSL)提供HOOK代码
-* 非常感谢[lanedet](https://github.com/Turoad/lanedet)提供模型代码
+PPlanedet is released under the [MIT license](LICENSE). We only allow you to use our project for academic uses.
 
-## 引用
-如果您认为我们的项目对您的研究有用，请引用我们的项目
+## Acknowledgement
+* Thanks [PASSL](https://github.com/PaddlePaddle/PASSL) for providing Hook codes
+* Thanks [lanedet](https://github.com/Turoad/lanedet) for providing model codes.
 
+## Citation
+If you find our project useful in your research, please consider citing:
+    
 ```latex
 @misc{PPlanedet,
     title={PPlanedet, A Toolkit for lane detection based on PaddlePaddle},
@@ -263,8 +264,8 @@ PPLanedet使用[MIT license](LICENSE)。但是我们仅允许您将PPLanedet用�
     year={2022}
 }
 ```
-
-PPLanedet中复现的方法
+    
+model reproduced in our project
 ```latex
 @Inproceedings{pan2018SCNN,  
   author = {Xingang Pan, Jianping Shi, Ping Luo, Xiaogang Wang, and Xiaoou Tang},  
