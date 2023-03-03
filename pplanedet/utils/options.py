@@ -36,12 +36,7 @@ def parse_args():
         help='skip validation during training')
     # for export
     parser.add_argument(
-        '--export',
-        action='store_true',
-        default=False,
-        help='skip validation during training')
-    parser.add_argument(
-        '--export_ckpt',
+         '--export',
         type=str,
         default=None,
         help='put the path to resuming file if needed')
