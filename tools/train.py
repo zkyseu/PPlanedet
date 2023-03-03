@@ -28,7 +28,7 @@ def main(args, cfg):
 
     # export model to inference or pretrain weight form
     if args.export:
-        trainer.export(args.export_ckpt,args.export_repvgg)
+        trainer.export(args.export,args.export_repvgg)
         return 
 
     if args.evaluate_only:
