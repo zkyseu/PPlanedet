@@ -128,6 +128,9 @@ class LogHook(Hook):
 
     def train_iter_end(self, trainer):
         for k, v in trainer.outputs.items():
+            # add loss to visualdl
+            if trainer.enable_visual:
+                trainer.vdl_logger.add_scalar(k, v, step=trainer.current_iter)
             if k not in trainer.logs:
                 if 'loss' in k:
                     fmt = ':.4e'

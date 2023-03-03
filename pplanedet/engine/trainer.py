@@ -3,6 +3,7 @@ import math
 import random
 import logging
 import numpy as np
+import visualdl
 from tqdm import tqdm
 from collections import OrderedDict
 
@@ -20,6 +21,7 @@ from ..datasets.builder import build_dataloader
 from ..model import build_model
 from ..solver import build_lr_scheduler, build_optimizer
 from ..datasets import IterLoader
+from ..hooks.checkpoint_hook import save
 
 def set_hyrbid_parallel_seed(basic_seed,
                              dp_rank,
@@ -101,6 +103,11 @@ class Trainer(BaseTrainer):
 
         dp_rank = dist.get_rank()
         self.log_interval = cfg.log_config.interval
+
+        # set visualdl
+        self.enable_visual = cfg.get("use_visual",False)
+        if self.enable_visual:
+            self.vdl_logger = visualdl.LogWriter(logdir=self.output_dir)
 
         # set seed
         seed = cfg.get('seed', False)
@@ -378,6 +385,9 @@ class Trainer(BaseTrainer):
         self.logger.info(f"best accuracy is {self.best_metric}") 
         self.logger.info(f"The epoch of best accuracy is {self.best_epoch}")
 
+        if self.enable_visual:
+            self.vdl_logger.add_scalar('Evaluate/mIoU', out, self.current_iter)
+
         self.model.train()
 
         self.metric = out
@@ -412,3 +422,20 @@ class Trainer(BaseTrainer):
                 state_dict_['model.' + k] = v
             state_dict = state_dict_
         self.model.set_state_dict(state_dict)   
+
+    def export(self,checkpoint_path,export_rep = False):
+        self.load(checkpoint_path)
+        # export repvgg block to a convolution
+        if export_rep:
+            for layer in self.model.sublayers():
+                if hasattr(layer, 'convert_to_deploy'):
+                    layer.convert_to_deploy()
+        self.logger.info(f'finish loading model from {checkpoint_path}....')
+        new_weight = OrderedDict()
+        for k,v in self.model.state_dict().items():
+            new_weight[k] = v
+        self.model.set_state_dict(new_weight)
+        save_dict = dict(state_dict = self.model.set_dict())
+        save_path = os.path.join(self.output_dir,'export_model.pd')
+        save(save_dict,save_path)
+        self.logger.info(f'Successfully export model to {save_path}')
