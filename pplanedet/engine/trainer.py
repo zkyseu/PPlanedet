@@ -386,7 +386,7 @@ class Trainer(BaseTrainer):
         self.logger.info(f"The epoch of best accuracy is {self.best_epoch}")
 
         if self.enable_visual:
-            self.vdl_logger.add_scalar('Evaluate/mIoU', out, self.current_iter)
+            self.vdl_logger.add_scalar('Evaluate/Acc', out, self.current_iter)
 
         self.model.train()
 
