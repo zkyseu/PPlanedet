@@ -9,7 +9,7 @@ from ..builder import HEADS,build_loss
 
 @HEADS.register()
 class LaneCls(nn.Layer):
-    def __init__(self, dim, loss = None,cfg=None):
+    def __init__(self, dim, loss = None,relation_loss = None, cfg=None):
         super(LaneCls, self).__init__()
         self.cfg = cfg
         chan = cfg.featuremap_out_channel
@@ -23,6 +23,7 @@ class LaneCls(nn.Layer):
         )
 
         self.criterion = build_loss(loss,cfg)
+        self.relation_loss = build_loss(relation_loss,cfg)
 
 
     def postprocess(self, out, localization_type='rel', flip_updown=True):
@@ -53,9 +54,10 @@ class LaneCls(nn.Layer):
 
         loss_stats = {}
         cls_loss = self.criterion(output['cls'], batch['cls_label'])
-        loss_stats.update({'cls_loss': cls_loss})
+        relation_loss = self.relation_loss(output['cls'])
+        loss = cls_loss + relation_loss
 
-        ret = {'loss': cls_loss}
+        ret = {'loss': loss}
 
         return ret
 
