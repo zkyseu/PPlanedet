@@ -8,6 +8,7 @@
 ## 🆕新闻
 在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
 <ul class="nobull">
+  <li>[2023-03-04] : 我们在V5中增加了Visualdl可视化功能，VisualDL功能类似tensorboard。
   <li>[2023-03-01] : 我们修改了PPLanedet中的一些bug，目前CLRNet还在调试中，如果您想获得高性能的车道线检测模型，我们建议您可以使用我们改进的CondLaneNet。
   <li>[2023-02-24] : 我们发布了PPLanedet的第五个版本(version5)。在V5中，我们复现了更多实用的backbone和Neck等模块(例如YOLOv6中的CSPRepBiFPN、CSPSimSPPF)。依靠这些更加先进的模块，我们得到了一个性能更佳的CondLaneNet。改进的CondLaneNet在CULane数据集上达到79.92的F1 score并且参数量只有11M，更多的细节可以参考CondLaneNet的<a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">配置文件</a>。 
 
@@ -243,6 +244,12 @@ python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
 如果你想要测试模型的速度，你可以运行以下的命令。但是需要注意的是测试脚本使用python进行编写并未采用常见的C++，因此测试得到的模型检测速度会低于论文报告的结果，但是也可以用来衡量不同模型间检测速度快慢
 ```
  python tools/test_speed.py configs/condlane/cspresnet_50_culane.py --model_path output_dir/cspresnet_50_culane/model.pd
+```
+
+### 5、VisualDL可视化
+如果你想可视化中间过程的loss，请在终端运行以下命令，其中log为存放日志的文件夹，更多的命令以及功能请参考[VisualDL](https://github.com/PaddlePaddle/VisualDL)
+```
+visualdl --logdir ./log
 ```
 
 ## License
