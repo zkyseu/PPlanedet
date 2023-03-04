@@ -9,4 +9,4 @@ from low-resolution branch. Extensive experiments on mainstream benchmarks demon
 ## Model List
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
-|RTformer      | RTformer | Tusimple |acc: 96.55| [config](https://github.com/zkyseu/PPlanedet/blob/v3/configs/rtformer/rtformer_tusimple.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/rtformer/epoch_46.pd)|
+|RTformer      | RTformer | Tusimple |acc: 96.55| [config](rtformer_tusimple.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/rtformer/epoch_46.pd)|
