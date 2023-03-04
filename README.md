@@ -8,7 +8,7 @@
 ## 🆕新闻
 在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
 <ul class="nobull">
-  <li>[2023-03-04] : 我们在V5中增加了Visualdl可视化功能，VisualDL功能类似tensorboard。
+  <li>[2023-03-04] : 我们在V5中增加了Visualdl可视化功能，VisualDL功能类似tensorboard。后续我们会完善PPLanedet文档关于如何在PPLanedet中增加组件，如果想尝试可以参考<a href="https://github.com/open-mmlab/mmdetection/blob/master/docs/en/tutorials/customize_models.md">mmdetection</a>
   <li>[2023-03-01] : 我们修改了PPLanedet中的一些bug，目前CLRNet还在调试中，如果您想获得高性能的车道线检测模型，我们建议您可以使用我们改进的CondLaneNet。
   <li>[2023-02-24] : 我们发布了PPLanedet的第五个版本(version5)。在V5中，我们复现了更多实用的backbone和Neck等模块(例如YOLOv6中的CSPRepBiFPN、CSPSimSPPF)。依靠这些更加先进的模块，我们得到了一个性能更佳的CondLaneNet。改进的CondLaneNet在CULane数据集上达到79.92的F1 score并且参数量只有11M，更多的细节可以参考CondLaneNet的<a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">配置文件</a>。 
 
