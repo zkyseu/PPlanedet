@@ -249,6 +249,7 @@ python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
 ### 5、VisualDL可视化
 如果你想可视化中间过程的loss，请在终端运行以下命令，其中log为存放日志的文件夹，更多的命令以及功能请参考[VisualDL](https://github.com/PaddlePaddle/VisualDL)
 ```
+# 首先你需要在配置文件中加上use_visual = True，训练完后即可得到日志文件，将其放在log文件夹下
 visualdl --logdir ./log
 ```
 
