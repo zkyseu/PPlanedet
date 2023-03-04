@@ -7,4 +7,4 @@ trade-off makes our model an ideal approach for scene understanding in IV applic
 ## Model List
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
-| ERFNet      | ERFNet | Tusimple |acc: 96.15| [config](https://github.com/zkyseu/PPlanedet/blob/v3/configs/erfnet/erfnet_tusimple.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/erfnet/erfnet.pd)|
+| ERFNet      | ERFNet | Tusimple |acc: 96.15| [config](erfnet_tusimple.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/erfnet/erfnet.pd)|
