@@ -435,7 +435,7 @@ class Trainer(BaseTrainer):
         for k,v in self.model.state_dict().items():
             new_weight[k] = v
         self.model.set_state_dict(new_weight)
-        save_dict = dict(state_dict = self.model.set_dict())
+        save_dict = dict(state_dict = self.model.state_dict())
         save_path = os.path.join(self.output_dir,'export_model.pd')
         save(save_dict,save_path)
         self.logger.info(f'Successfully export model to {save_path}')
