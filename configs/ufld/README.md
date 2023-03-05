@@ -10,3 +10,6 @@ Modern methods mainly regard lane detection as a problem of pixel-wise segmentat
 |UFLD|MobileNetV3|Tusimple| acc: 95.71|[config](mobilenetv3_tusimple.py)|[model](https://github.com/zkyseu/PPlanedet/releases/download/UFLD/model.pd)|
 |UFLD|CSPResNet-m|Tusimple|acc: 96.05|[config](cspresnet_tusimple.py)|[model](https://github.com/zkyseu/PPlanedet/releases/download/UFLD/cspresnet.pd)
 |UFLD|MobileNetV3|CULane|F1: 66.25|[config](mobilenetv3_culane.py)|[model](https://github.com/zkyseu/PPlanedet/releases/download/UFLD/model_culane.pd)
+
+Note:
+UFLD reproduced in pplanedet dose not adopt segmentation loss as an auxiliary loss. Therefore, F1 and accuracy are lower than those in official paper.
