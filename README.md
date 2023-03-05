@@ -253,6 +253,14 @@ python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
 visualdl --logdir ./log
 ```
 
+### 6、模型导出
+如果你想将模型导出为预训练的格式(只保留模型权重去除优化器以及学习率的权重)，可以使用以下命令
+```
+python tools/train.py -c configs/ufld/mobilenetv3_culane.py --export output_dir/mobilenetv3_culane/epoch_51.pd
+#如果模型权重中包含RepVGG模块，可以运行以下命令来将RepVGG中卷积进行重参数化。
+#python tools/train.py -c config path --export model path --export_repvgg
+```
+
 ## License
 PPLanedet使用[MIT license](LICENSE)。但是我们仅允许您将PPLanedet用于学术用途。
 
