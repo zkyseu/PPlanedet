@@ -1,7 +1,7 @@
 <font size=4> 简体中文 | [English](ENGLISH.md)
 ## 🚀PPLanedet: 基于PaddlePaddle的车道线检测的工具包
 
-<font size=3> 在这个项目中，我们开发了PPLanedet用于车道线检测。PPLanedet中包含了很多先进的车道线检测算法以方便车道线检测的科学研究和工程应用。欢迎加入我们来完善PPLanedet。
+<font size=3> 在这个项目中，我们开发了PPLanedet用于车道线检测。PPLanedet中包含了很多先进的车道线检测算法以方便车道线检测的科学研究和工程应用。欢迎加入我们来完善PPLanedet。如果您觉得PPLanedet不错，可以给我们项目一个star。
 
 <font size=3>如果您没有充足的计算资源，我们建议您可以在百度[AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title)上运行PPLanedet。在Aistudio上您可以免费获得V100、A100两种高性能GPU计算资源，我们也在AIstudio上公开了PPLanedet的运行demo，项目链接在[这里](https://aistudio.baidu.com/aistudio/projectdetail/5316470?contributionType=1)
 
