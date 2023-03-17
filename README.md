@@ -44,9 +44,9 @@ PPLanedet是一个基于PaddlePaddle的车道线检测工具包。PaddlePaddle�
         </details>
         <details><summary><b>Keypoint(anchor) based</b></summary>
           <ul>
-            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v3/configs/ufld">UFLD</a></li>
-            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/condlane">CondLane</a></li>
-            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v4/configs/clrnet">CLRNet</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/ufld">UFLD</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">CondLane</a></li>
+            <li><a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/clrnet">CLRNet</a></li>
           </ul>
         </details>
         <details><summary><b>GAN based</b></summary>
