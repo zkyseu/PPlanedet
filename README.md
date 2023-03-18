@@ -181,7 +181,7 @@ $TUSIMPLEROOT/test_label.json # test label json file
 python tools/generate_seg_tusimple.py --root $TUSIMPLEROOT
 # python tools/generate_seg_tusimple.py --root /root/paddlejob/workspace/train_data/datasets --savedir /root/paddlejob/workspace/train_data/datasets/seg_label
 ```
-### 自己数据集
+### 自制数据集
 如果你想在自己数据集上进行训练，我们在[issue #1](https://github.com/zkyseu/PPlanedet/issues/1)中对该问题进行了讨论，大家可以进行参考
 
 ## 💎开始快乐炼丹
