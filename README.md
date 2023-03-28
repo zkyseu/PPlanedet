@@ -3,7 +3,7 @@
 
 <font size=3> 在这个项目中，我们开发了PPLanedet用于车道线检测。PPLanedet中包含了很多先进的车道线检测算法以方便车道线检测的科学研究和工程应用。欢迎加入我们来完善PPLanedet。如果您觉得PPLanedet不错，可以给我们项目一个star。
 
-<font size=3>如果您没有充足的计算资源，我们建议您可以在百度[AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title)上运行PPLanedet。在Aistudio上您可以免费获得V100、A100两种高性能GPU计算资源，我们也在AIstudio上公开了PPLanedet的运行demo，项目链接在[这里](https://aistudio.baidu.com/aistudio/projectdetail/5316470?contributionType=1)，由于在Windows系统上可能存在权限问题，我们建议您在linux系统上运行PPLanedet。
+<font size=3>如果您没有充足的计算资源，我们建议您可以在百度[AiStudio](https://aistudio.baidu.com/aistudio/index?ad-from=m-title)上运行PPLanedet。在Aistudio上您可以免费获得V100、A100两种高性能GPU计算资源，我们也在AIstudio上公开了PPLanedet的运行demo，项目链接在[这里](https://aistudio.baidu.com/aistudio/projectdetail/5316470?contributionType=1)。由于在Windows系统上可能存在权限问题，我们建议您在linux系统上运行PPLanedet。
 
 ## 🆕新闻
 在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
