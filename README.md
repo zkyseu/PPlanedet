@@ -229,7 +229,7 @@ optional arguments:
   --load_from LOAD_FROM
                         The path of model
 ```
-运行以下命令对一个文件夹下的图片进行预测，可视化结果保存在文件夹 `vis`下，如果您的模型不是分割模型，需要在配置文件中加上 seg=False
+运行以下命令对一个文件夹下的图片进行预测，可视化结果保存在文件夹 `vis`下，如果您的模型不是分割模型，需要在配置文件中加上 seg=False，具体可见[issue3](https://github.com/zkyseu/PPlanedet/issues/3)
 ```
 # first you should add 'seg = False' in your config 
 python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
