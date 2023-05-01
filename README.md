@@ -8,7 +8,7 @@
 ## 🆕新闻
 在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
 <ul class="nobull">
-  <li>[2023-05-01] : 我们团队基于DETR提出一个端到端的车道线检测模型<a href="https://github.com/zkyseu/O2SFormer">O2SFormer</a>, 欢迎大家使用！
+  <li>[2023-05-01] : 我们基于DETR提出一个端到端的车道线检测模型<a href="https://github.com/zkyseu/O2SFormer">O2SFormer</a>, 欢迎大家使用！
   <li>[2023-03-05] : 我们公开了UFLD模型在CULane上的预训练权重，并且增加了模型导出为预训练格式的功能。
   <li>[2023-03-04] : 我们在V5中增加了Visualdl可视化功能，VisualDL功能类似tensorboard。后续我们会完善PPLanedet文档关于如何在PPLanedet中增加组件，如果想尝试可以参考<a href="https://github.com/open-mmlab/mmdetection/blob/master/docs/en/tutorials/customize_models.md">mmdetection</a>。
   <li>[2023-03-01] : 我们修改了PPLanedet中的一些bug，目前CLRNet还在调试中，如果您想获得高性能的车道线检测模型，我们建议您可以使用我们改进的CondLaneNet。
