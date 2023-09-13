@@ -40,8 +40,7 @@ test_parameters = dict(conf_threshold=0.40, nms_thres=50, nms_topk=max_lanes)
 epochs = 70
 batch_size = 24 
 
-total_iter = (3616 // batch_size + 1) * epochs
-lr_scheduler = dict(name='CosineAnnealingDecay',learning_rate = 0.6e-3, T_max=total_iter)
+lr_scheduler = dict(name='CosineAnnealingDecay',learning_rate = 0.6e-3, T_max=epochs)
 optimizer = dict(name='AdamW')  # 3e-4 for batchsize 8
 
 eval_ep = 3
