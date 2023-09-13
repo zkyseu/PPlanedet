@@ -7,7 +7,7 @@ import paddle.nn.functional as F
 from ..common_model import ConvModule
 
 from ..lane import Lane
-from ..common_model import assign,ROIGather,LinearModule
+from ..common_model import assign,ROIGather,LinearModule,lane_nms
 from ..losses import line_iou
 from ...utils import accuracy
 from paddleseg.cvlibs.param_init import constant_init,normal_init
@@ -244,7 +244,6 @@ class CLRHead(nn.Layer):
             if stage != self.refine_layers - 1:
                 priors = prediction_lines.detach().clone()
                 priors_on_featmap = paddle.index_select(priors,6 + self.sample_x_indexs,axis = -1)
-#                priors_on_featmap = priors[..., 6 + self.sample_x_indexs]
 
         if self.training:
             seg = None
@@ -344,7 +343,6 @@ class CLRHead(nn.Layer):
                 if len(target) == 0:
                     # If there are no targets, all predictions have to be negatives (i.e., 0 confidence)
                     cls_target = paddle.zeros((predictions.shape[0],)).astype("int64")
-#                    cls_target = predictions.new_zeros(predictions.shape[0]).astype('int64')
                     cls_pred = predictions[:, :2]
                     cls_loss = cls_loss + cls_criterion(
                         cls_pred, cls_target).sum()
@@ -422,51 +420,6 @@ class CLRHead(nn.Layer):
 
         return return_value
 
-    def lane_nms(self, predictions, scores, nms_overlap_thresh, top_k):
-        """
-        NMS for lane detection.
-        predictions: paddle.Tensor [num_lanes,conf,y,x,lenght,72offsets] [12,77]
-        scores: paddle.Tensor [num_lanes]
-        nms_overlap_thresh: float
-        top_k: int
-        """
-        # sort by scores to get idx
-        # paddle的argsort 存在问题，因此预测时候用np.argsort实现。
-    #     score_np = scores.cpu().numpy()
-    #     np_idx = np.argsort(score_np)[::-1]
-    # #        print("np_idx:",np_idx)
-    #     idx = paddle.to_tensor(np_idx)
-        idx = scores.argsort(descending=True)
-        keep = []
-
-        condidates = predictions.clone()
-        condidates = condidates.index_select(idx)
-
-        while len(condidates) > 0:
-            keep.append(idx[0])
-            if len(keep) >= top_k or len(condidates) == 1:
-                break
-
-            ious = []
-            for i in range(1, len(condidates)):
-                ious.append(1 - line_iou(
-                    condidates[i].unsqueeze(0),
-                    condidates[0].unsqueeze(0),
-                    img_w=self.img_w,
-                    length=15))
-            ious = paddle.to_tensor(ious)
-
-            mask = ious <= nms_overlap_thresh
-            id = paddle.where(mask == False)[0]
-
-            if id.shape[0] == 0:
-                break
-            condidates = condidates[1:].index_select(id)
-            idx = idx[1:].index_select(id)
-        keep = paddle.stack(keep)
-
-        return keep
-
     def get_lanes(self, output, as_lanes=True):
         '''
         Convert model output to lanes.
@@ -496,22 +449,19 @@ class CLRHead(nn.Layer):
                             5:] = nms_predictions[..., 5:] * (self.img_w - 1)
 
 
-            keep = self.lane_nms(
+            keep = lane_nms(
                 nms_predictions[..., 5:],
                 scores,
                 nms_overlap_thresh=self.cfg.test_parameters.nms_thres,
-                top_k=self.cfg.max_lanes)
-#            keep = keep.squeeze()
+                top_k=self.cfg.max_lanes,
+                img_w=self.img_w)
 
             predictions = predictions.index_select(keep)
-#            print("predictions:",predictions)
 
             if predictions.shape[0] == 0:
                 decoded.append([])
                 continue
-#            print("predictions:",predictions)
             predictions[:, 5] = paddle.round(predictions[:, 5] * self.n_strips)
-#            print(predictions[:, 5])
             if as_lanes:
                 pred = self.predictions_to_pred(predictions)
             else:
