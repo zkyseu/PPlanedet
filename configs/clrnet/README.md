@@ -6,4 +6,4 @@ Lane is critical in the vision navigation system of the intelligent vehicle. Nat
 ## Model List
 | Architecture| Backbone |Dataset | Metric | Config| Checkpoints  |
 |-------------|----------|--------|--------|-------|--------------|
-| CLRNet      | ResNet34 | CUlane |F1: 78.94| [config](resnet34_culane.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/erfnet/erfnet.pd)|
+| CLRNet      | ResNet34 | CUlane |F1: 78.94| [config](resnet34_culane.py)  | [model](https://github.com/zkyseu/PPlanedet/releases/download/CLRNet/model.pd)|
