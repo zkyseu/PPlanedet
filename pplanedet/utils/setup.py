@@ -13,7 +13,7 @@ def setup(args, cfg):
 
     use_byol_iters = cfg.get('use_byol_iters', None)
 
-    timestamp = cfg.get('timestamp', False)
+    timestamp = cfg.get('timestamp', True)
     cfg.timestamp = time.strftime('-%Y-%m-%d-%H-%M', time.localtime())
 
     if timestamp:

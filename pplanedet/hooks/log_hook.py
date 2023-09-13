@@ -35,10 +35,10 @@ class LogHook(Hook):
             if isinstance(log_dict['lr'], dict):
                 lr_str = []
                 for k, val in log_dict['lr'].items():
-                    lr_str.append(f'lr_{k}: {val:.3e}')
+                    lr_str.append(f'lr_{k}: {val:.6e}')
                 lr_str = ' '.join(lr_str)
             else:
-                lr_str = f'lr: {log_dict["lr"]:.3e}'
+                lr_str = f'lr: {log_dict["lr"]:.6e}'
 
             # by epoch: Epoch [4/100][100/1000]
             # by iter:  Iter [100/100000]
@@ -74,9 +74,10 @@ class LogHook(Hook):
             ]:
                 continue
             if isinstance(val, AverageMeter):
-                val = str(val)
+                val = self.parse_loss(val)
             log_items.append(val)
 
+        
         log_str += ', '.join(log_items)
 
         trainer.logger.info(log_str)
@@ -88,6 +89,15 @@ class LogHook(Hook):
             return round(items, 5)
         else:
             return items
+ 
+    def parse_loss(self,loss):
+        loss = str(loss)
+        loss_split = loss.split(' ')
+        if loss_split[1] == '':
+            loss_split[1] = 0
+#        print("loss_split[1]:",(loss_split[0],loss_split[1]))
+        new_loss = '{}: {:.4f}'.format(loss_split[0],float(loss_split[1]))  
+        return new_loss
 
     def print_log(self, trainer):
         log_dict = trainer.logs

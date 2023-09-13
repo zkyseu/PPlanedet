@@ -8,11 +8,8 @@
 ## 🆕新闻
 在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
 <ul class="nobull">
+  <li>[2023-09-13] :fire: 完成CLRNet的复现，发布CLRNet最新代码以及预训练权重
   <li>[2023-05-01] : 我们基于DETR提出一个端到端的车道线检测模型<a href="https://github.com/zkyseu/O2SFormer">O2SFormer</a>, 欢迎大家使用！
-  <li>[2023-03-05] : 我们公开了UFLD模型在CULane上的预训练权重，并且增加了模型导出为预训练格式的功能。
-  <li>[2023-03-04] : 我们在V5中增加了Visualdl可视化功能，VisualDL功能类似tensorboard。后续我们会完善PPLanedet文档关于如何在PPLanedet中增加组件，如果想尝试可以参考<a href="https://github.com/open-mmlab/mmdetection/blob/master/docs/en/tutorials/customize_models.md">mmdetection</a>。
-  <li>[2023-03-01] : 我们修改了PPLanedet中的一些bug，目前CLRNet还在调试中，如果您想获得高性能的车道线检测模型，我们建议您可以使用我们改进的CondLaneNet。
-  <li>[2023-02-24] :fire: 我们发布了PPLanedet的第五个版本(version5)。在V5中，我们复现了更多实用的backbone和Neck等模块(例如YOLOv6中的CSPRepBiFPN、CSPSimSPPF)。依靠这些更加先进的模块，我们得到了一个性能更佳的CondLaneNet。改进的CondLaneNet在CULane数据集上达到79.92的F1 score并且参数量只有11M，更多的细节可以参考CondLaneNet的<a href="https://github.com/zkyseu/PPlanedet/tree/v5/configs/condlane">配置文件</a>。 
 
 </ul>
 
@@ -120,28 +117,35 @@ PPLanedet是一个基于PaddlePaddle的车道线检测工具包。PaddlePaddle�
   </tbody>
 </table>
 
+
 ## 🛠️安装
-### 步骤1 安装 PaddlePaddle>=2.4.0(如果有疑问可以参考[官方文档](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
+<details>
+<summary>具体步骤</summary>
+
+ 步骤1 安装 PaddlePaddle==2.4.2(如果有疑问可以参考[官方文档](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/linux-conda.html))
 ```Shell
 conda create -n pplanedet python=3.8 -y
 conda activate pplanedet
-conda install paddlepaddle-gpu==2.4.1 cudatoolkit=10.2 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/
+conda install paddlepaddle-gpu==2.4.2 cudatoolkit=10.2 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/
 ```
 
-### 步骤2 Git clone PPlanedet
+ 步骤2 Git clone PPlanedet
 ```Shell
 git clone https://github.com/zkyseu/PPlanedet
 ```
 
-### 步骤3 安装 PPlanedet
+ 步骤3 安装 PPlanedet
 ```Shell
 cd PPlanedet
 pip install -r requirements.txt
 python setup.py build develop
 ```
+</details>
 
 ## 📘数据集准备(CULane和Tusimple为例)
 ### CULane
+<details>
+<summary>CULane数据集准备步骤</summary>
 
 下载 [CULane](https://xingangpan.github.io/projects/CULane.html). 接着解压到 `$CULANEROOT`. 创建 `data` 目录.
 
@@ -157,8 +161,11 @@ $CULANEROOT/driver_xx_xxframe    # data folders x6
 $CULANEROOT/laneseg_label_w16    # lane segmentation labels
 $CULANEROOT/list                 # data lists
 ```
+</details>
 
 ### Tusimple
+<details>
+<summary>Tusimple数据集准备步骤</summary>
 下载 [Tusimple](https://github.com/TuSimple/tusimple-benchmark/issues/3). 然后解压到 `$TUSIMPLEROOT`. 创建 `data` 文件夹.
 
 ```Shell
@@ -182,11 +189,16 @@ $TUSIMPLEROOT/test_label.json # test label json file
 python tools/generate_seg_tusimple.py --root $TUSIMPLEROOT
 # python tools/generate_seg_tusimple.py --root /root/paddlejob/workspace/train_data/datasets --savedir /root/paddlejob/workspace/train_data/datasets/seg_label
 ```
+</details>
+
 ### 自制数据集
 如果你想在自己数据集上进行训练，我们在[issue #1](https://github.com/zkyseu/PPlanedet/issues/1)中对该问题进行了讨论，大家可以进行参考
 
 ## 💎开始快乐炼丹
 ### 1、训练的命令
+<details>
+<summary>开启训练</summary>
+
 对于训练, 运行以下命令(shell脚本在script文件夹下)。更多的训练命令可以参考[documentation](https://github.com/zkyseu/PPlanedet/blob/v3/DOC.md)
 ```Shell
 # training on single-GPU
@@ -200,16 +212,24 @@ python tools/train.py -c configs/scnn/resnet50_tusimple.py
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 python -m paddle.distributed.launch tools/train.py -c configs/scnn/resnet50_tusimple.py
 ```
+</details>
 
 ### 2、测试
+<details>
+<summary>开启测试</summary>
+
 运行以下命令开启模型的测试
 ```Shell
 python tools/train.py -c configs/scnn/resnet50_tusimple.py \
                       --load /home/fyj/zky/tusimple/new/pplanedet/output_dir/resnet50_tusimple/latest.pd \
                       --evaluate-only 
 ```
+</details>
 
 ### 3、推理/Demo
+<details>
+<summary>开启推理</summary>
+
 想了解更多细节，请参考 `tools/detect.py`.
 ```
 python tools/detect.py --help
@@ -243,27 +263,41 @@ python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
 python tools/detect.py configs/scnn/resnet50_tusimple.py --img images\
           --load_from model.pd --savedir ./vis
 ```
+</details>
+
 
 ### 4、测试模型检测速度
+<details>
+<summary>开启速度测试</summary>
+
 如果你想要测试模型的速度，你可以运行以下的命令。但是需要注意的是测试脚本使用python进行编写并未采用常见的C++，因此测试得到的模型检测速度会低于论文报告的结果，但是也可以用来衡量不同模型间检测速度快慢
 ```
  python tools/test_speed.py configs/condlane/cspresnet_50_culane.py --model_path output_dir/cspresnet_50_culane/model.pd
 ```
+</details>
 
 ### 5、VisualDL可视化
+<details>
+<summary>开启可视化</summary>
+
 如果你想可视化中间过程的loss，请在终端运行以下命令，其中log为存放日志的文件夹，更多的命令以及功能请参考[VisualDL](https://github.com/PaddlePaddle/VisualDL)
 ```
 # 首先你需要在配置文件中加上use_visual = True，训练完后即可得到日志文件，将其放在log文件夹下
 visualdl --logdir ./log
 ```
+</details>
 
 ### 6、模型导出
+<details>
+<summary>开启模型导出</summary>
+
 如果你想将模型导出为预训练的格式(只保留模型权重去除优化器以及学习率的权重)，可以使用以下命令
 ```
 python tools/train.py -c configs/ufld/mobilenetv3_culane.py --export output_dir/mobilenetv3_culane/epoch_51.pd
 #如果模型权重中包含RepVGG模块，可以运行以下命令来将RepVGG中卷积进行重参数化。
 #python tools/train.py -c config path --export model path --export_repvgg
 ```
+</details>
 
 ## License
 PPLanedet使用[MIT license](LICENSE)。但是我们仅允许您将PPLanedet用于学术用途。

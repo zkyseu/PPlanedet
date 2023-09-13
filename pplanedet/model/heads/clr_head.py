@@ -7,8 +7,9 @@ import paddle.nn.functional as F
 from ..common_model import ConvModule
 
 from ..lane import Lane
-from ..common_model import nms
 from ..common_model import assign,ROIGather,LinearModule
+from ..losses import line_iou
+from ...utils import accuracy
 from paddleseg.cvlibs.param_init import constant_init,normal_init
 
 from ..builder import HEADS,build_head,build_loss
@@ -43,7 +44,7 @@ class CLRHead(nn.Layer):
             0, 1, num=self.sample_points, dtype=paddle.float32) *
                                 self.n_strips).astype('int64'))
         self.register_buffer(name='prior_feat_ys', tensor=paddle.flip(
-            (1 - self.sample_x_indexs.astype('float') / self.n_strips), axis=[-1]))
+            (1 - self.sample_x_indexs.astype('float32') / self.n_strips), axis=[-1]))
         self.register_buffer(name='prior_ys', tensor=paddle.linspace(1,
                                        0,
                                        num=self.n_offsets,
@@ -73,8 +74,8 @@ class CLRHead(nn.Layer):
 
         self.reg_layers = nn.Linear(
             self.fc_hidden_axis, self.n_offsets + 1 + 2 +
-            1)  # n offsets + 1 length + start_x + start_y + theta
-        self.cls_layers = nn.Linear(self.fc_hidden_axis, 2)
+            1,bias_attr=True)  # n offsets + 1 length + start_x + start_y + theta
+        self.cls_layers = nn.Linear(self.fc_hidden_axis, 2, bias_attr=True)
 
         # init the weights here
         self.init_weights()
@@ -134,43 +135,37 @@ class CLRHead(nn.Layer):
 
         # init priors on feature map
         priors_on_featmap = paddle.index_select(priors.clone(),6 + self.sample_x_indexs,axis = -1)
-#        priors_on_featmap = priors.clone()[:, 6 + self.sample_x_indexs]
 
         return priors, priors_on_featmap
 
     def _init_prior_embeddings(self):
-        # [start_y, start_x, theta] -> all normalize
         self.prior_embeddings = nn.Embedding(self.num_priors, 3)
-
         bottom_priors_nums = self.num_priors * 3 // 4
         left_priors_nums, _ = self.num_priors // 8, self.num_priors // 8
-
         strip_size = 0.5 / (left_priors_nums // 2 - 1)
         bottom_strip_size = 1 / (bottom_priors_nums // 4 + 1)
-        for i in range(left_priors_nums):
-            constant_init(self.prior_embeddings.weight[i, 0],
-                              value = (i // 2) * strip_size)
-            constant_init(self.prior_embeddings.weight[i, 1], value = 0.)
-            constant_init(self.prior_embeddings.weight[i, 2],
-                              value = 0.16 if i % 2 == 0 else 0.32)
 
-        for i in range(left_priors_nums,
-                       left_priors_nums + bottom_priors_nums):
-            constant_init(self.prior_embeddings.weight[i, 0], value = 0.)
-            constant_init(self.prior_embeddings.weight[i, 1],
-                              value = ((i - left_priors_nums) // 4 + 1) *
-                              bottom_strip_size)
-            constant_init(self.prior_embeddings.weight[i, 2],
-                             value =  0.2 * (i % 4 + 1))
+        with paddle.no_grad():
+            for i in range(left_priors_nums):
+                self.prior_embeddings.weight[i, 0] = i // 2 * strip_size
+                self.prior_embeddings.weight[i, 1] = 0.0
+                self.prior_embeddings.weight[i,
+                                             2] = 0.16 if i % 2 == 0 else 0.32
 
-        for i in range(left_priors_nums + bottom_priors_nums, self.num_priors):
-            constant_init(
-                self.prior_embeddings.weight[i, 0],
-                value = ((i - left_priors_nums - bottom_priors_nums) // 2) *
-                strip_size)
-            constant_init(self.prior_embeddings.weight[i, 1], value = 1.)
-            constant_init(self.prior_embeddings.weight[i, 2],
-                              value = 0.68 if i % 2 == 0 else 0.84)
+            for i in range(left_priors_nums,
+                           left_priors_nums + bottom_priors_nums):
+                self.prior_embeddings.weight[i, 0] = 0.0
+                self.prior_embeddings.weight[i, 1] = (
+                    (i - left_priors_nums) // 4 + 1) * bottom_strip_size
+                self.prior_embeddings.weight[i, 2] = 0.2 * (i % 4 + 1)
+
+            for i in range(left_priors_nums + bottom_priors_nums,
+                           self.num_priors):
+                self.prior_embeddings.weight[i, 0] = (
+                    i - left_priors_nums - bottom_priors_nums) // 2 * strip_size
+                self.prior_embeddings.weight[i, 1] = 1.0
+                self.prior_embeddings.weight[i,
+                                             2] = 0.68 if i % 2 == 0 else 0.84
 
     # forward function here
     def forward(self, x, **kwargs):
@@ -229,9 +224,7 @@ class CLRHead(nn.Layer):
 
             predictions = priors.clone()
             predictions[:, :, :2] = cls_logits
-
-            predictions[:, :,
-                        2:5] += reg[:, :, :3]  # also reg theta angle here
+            predictions[:, :,2:5] += reg[:, :, :3]  # also reg theta angle here
             predictions[:, :, 5] = reg[:, :, 3]  # length
 
             def tran_tensor(t):
@@ -271,13 +264,13 @@ class CLRHead(nn.Layer):
             output.update(seg)
             return output
 
-        return predictions_lists[-1]
+        return dict(output=predictions_lists[-1])
 
     def predictions_to_pred(self, predictions):
         '''
         Convert predictions to internal Lane structure for evaluation.
         '''
-        self.prior_ys = self.prior_ys.astype('float64')
+        prior_ys = self.prior_ys.astype('float64')
         lanes = []
         for lane in predictions:
             lane_xs = lane[6:]  # normalized value
@@ -285,21 +278,22 @@ class CLRHead(nn.Layer):
                         self.n_strips)
             length = int(round(lane[5].item()))
             end = start + length - 1
-            end = min(end, len(self.prior_ys) - 1)
+            end = min(end, len(prior_ys) - 1)
             # end = label_end
             # if the prediction does not start at the bottom of the image,
             # extend its prediction until the x is outside the image
-            if start == 0:
-                start = self.n_strips
+            if start > 0:
+                mask = ((lane_xs[:start] >= 0.) &
+                        (lane_xs[:start] <= 1.)).cpu().detach().numpy()[::-1]
+                mask = ~((mask.cumprod()[::-1]).astype(bool))
+                lane_xs[:start][mask] = -2
+            if end < len(prior_ys) - 1:
+                lane_xs[end + 1:] = -2
 
-            mask = ~((((lane_xs[:start] >= 0.) & (lane_xs[:start] <= 1.)
-                       ).cpu().numpy()[::-1].cumprod()[::-1]).astype(np.bool))
-            lane_xs[end + 1:] = -2
-            lane_xs[:start][mask] = -2
-            lane_ys = self.prior_ys[lane_xs >= 0]
+            lane_ys = prior_ys[lane_xs >= 0].clone()
             lane_xs = lane_xs[lane_xs >= 0]
-            lane_xs = lane_xs.flip(0).astype('float64')
-            lane_ys = lane_ys.flip(0)
+            lane_xs = lane_xs.flip(axis=0).astype('float64')
+            lane_ys = lane_ys.flip(axis=0)
 
             lane_ys = (lane_ys * (self.cfg.ori_img_h - self.cfg.cut_height) +
                        self.cfg.cut_height) / self.cfg.ori_img_h
@@ -336,9 +330,11 @@ class CLRHead(nn.Layer):
         predictions_lists = output['predictions_lists']
         targets = batch['lane_line'].clone()
         cls_criterion = self.focal_loss
-        cls_loss = 0
-        reg_xytl_loss = 0
-        iou_loss = 0
+        cls_loss = paddle.to_tensor(0.0)
+        reg_xytl_loss = paddle.to_tensor(0.0)
+        iou_loss = paddle.to_tensor(0.0)
+        cls_acc = []
+        cls_acc_stage = []
 
         for stage in range(self.refine_layers):
             predictions_list = predictions_lists[stage]
@@ -360,34 +356,27 @@ class CLRHead(nn.Layer):
 
                 # classification targets
                 cls_target = paddle.zeros((predictions.shape[0],)).astype("int64")
-#                cls_target = predictions.new_zeros(predictions.shape[0]).astype("int64")
                 cls_target[matched_row_inds] = 1
                 cls_pred = predictions[:, :2]
 
                 # regression targets -> [start_y, start_x, theta] (all transformed to absolute values), only on matched pairs
-                reg_yxtl = paddle.index_select(predictions,matched_row_inds,axis = 0)[:,2:6]
-#                reg_yxtl = predictions[matched_row_inds, 2:6]
+                reg_yxtl = paddle.index_select(predictions,matched_row_inds,axis = 0)[...,2:6]
                 reg_yxtl[:, 0] *= self.n_strips
                 reg_yxtl[:, 1] *= (self.img_w - 1)
                 reg_yxtl[:, 2] *= 180
                 reg_yxtl[:, 3] *= self.n_strips
 
-                target_yxtl = paddle.index_select(target,matched_col_inds,axis=0)[:,2:6].clone()
-#                target_yxtl = target[matched_col_inds, 2:6].clone()
+                target_yxtl = paddle.index_select(target,matched_col_inds,axis=0)[...,2:6].clone()
 
-                # regression targets -> S coordinates (all transformed to absolute values)
-                reg_pred = paddle.index_select(predictions,matched_row_inds,axis=0)[:,6:]
-#                reg_pred = predictions[matched_row_inds, 6:]
+                reg_pred = paddle.index_select(predictions,matched_row_inds,axis=0)[...,6:]
                 reg_pred *= (self.img_w - 1)
-                reg_targets = paddle.index_select(target,matched_col_inds,axis = 0)[:,6:].clone()
-#                reg_targets = target[matched_col_inds, 6:].clone()
+                reg_targets = paddle.index_select(target,matched_col_inds,axis = 0)[...,6:].clone()
 
                 with paddle.no_grad():
                     predictions_starts = paddle.clip(
-                        (paddle.index_select(predictions,matched_row_inds,axis = 0)[:,2] *
-                         self.n_strips).round().astype('int64'), 0,
-                        self.n_strips)  # ensure the predictions starts is valid
-                    target_starts = (paddle.index_select(target,matched_col_inds,axis = 0)[:,2] *
+                        (paddle.index_select(predictions,matched_row_inds,axis = 0)[...,2] *
+                         self.n_strips).round().astype('int64'), 0, self.n_strips)  # ensure the predictions starts is valid
+                    target_starts = (paddle.index_select(target,matched_col_inds,axis = 0)[...,2] *
                                      self.n_strips).round().astype('int64')
                     target_yxtl[:, -1] -= (predictions_starts - target_starts
                                            )  # reg length
@@ -402,7 +391,11 @@ class CLRHead(nn.Layer):
                     reg_yxtl, target_yxtl,
                     reduction='none').mean()
 
+                
                 iou_loss = iou_loss + self.liou_loss(pred = reg_pred, target = reg_targets,img_w = self.img_w, length=15)
+                cls_accuracy = accuracy(cls_pred, cls_target)
+                cls_acc_stage.append(cls_accuracy)
+            cls_acc.append(sum(cls_acc_stage) / (len(cls_acc_stage) + 1e-5))
 
         # extra segmentation loss
         seg_loss = self.criterion(output["seg"],batch["seg"].astype('int64'))
@@ -416,16 +409,70 @@ class CLRHead(nn.Layer):
 
         return_value = {
             'loss': loss,
+            'cls_loss': cls_loss * cls_loss_weight,
+            'reg_xytl_loss': reg_xytl_loss * xyt_loss_weight,
+            'seg_loss': seg_loss * seg_loss_weight,
+            'iou_loss': iou_loss * iou_loss_weight
         }
+        for i in range(self.refine_layers):
+            if not isinstance(cls_acc[i], paddle.Tensor):
+                cls_acc[i] = paddle.to_tensor(cls_acc[i])
+            return_value['stage_{}_acc'.format(i)] = cls_acc[i]
 
 
         return return_value
 
+    def lane_nms(self, predictions, scores, nms_overlap_thresh, top_k):
+        """
+        NMS for lane detection.
+        predictions: paddle.Tensor [num_lanes,conf,y,x,lenght,72offsets] [12,77]
+        scores: paddle.Tensor [num_lanes]
+        nms_overlap_thresh: float
+        top_k: int
+        """
+        # sort by scores to get idx
+        # paddle的argsort 存在问题，因此预测时候用np.argsort实现。
+    #     score_np = scores.cpu().numpy()
+    #     np_idx = np.argsort(score_np)[::-1]
+    # #        print("np_idx:",np_idx)
+    #     idx = paddle.to_tensor(np_idx)
+        idx = scores.argsort(descending=True)
+        keep = []
+
+        condidates = predictions.clone()
+        condidates = condidates.index_select(idx)
+
+        while len(condidates) > 0:
+            keep.append(idx[0])
+            if len(keep) >= top_k or len(condidates) == 1:
+                break
+
+            ious = []
+            for i in range(1, len(condidates)):
+                ious.append(1 - line_iou(
+                    condidates[i].unsqueeze(0),
+                    condidates[0].unsqueeze(0),
+                    img_w=self.img_w,
+                    length=15))
+            ious = paddle.to_tensor(ious)
+
+            mask = ious <= nms_overlap_thresh
+            id = paddle.where(mask == False)[0]
+
+            if id.shape[0] == 0:
+                break
+            condidates = condidates[1:].index_select(id)
+            idx = idx[1:].index_select(id)
+        keep = paddle.stack(keep)
+
+        return keep
 
     def get_lanes(self, output, as_lanes=True):
         '''
         Convert model output to lanes.
         '''
+        output = output['output']
+#        print("output shape:",output.shape)
         softmax = nn.Softmax(axis=1)
 
         decoded = []
@@ -436,8 +483,6 @@ class CLRHead(nn.Layer):
             keep_inds = scores >= threshold
             predictions = predictions[keep_inds]
             scores = scores[keep_inds]
-            category_idxs = paddle.zeros((predictions.shape[0],),dtype="int64")
-            categories = [0]
 
             if predictions.shape[0] == 0:
                 decoded.append([])
@@ -445,31 +490,32 @@ class CLRHead(nn.Layer):
             nms_predictions = predictions.detach().clone()
             nms_predictions = paddle.concat(
                 [nms_predictions[..., :4], nms_predictions[..., 5:]], axis=-1)
+                
             nms_predictions[..., 4] = nms_predictions[..., 4] * self.n_strips
             nms_predictions[...,
                             5:] = nms_predictions[..., 5:] * (self.img_w - 1)
 
-            if nms_predictions.shape[0]> self.cfg.max_lanes:
-                keep_boxes_idxs,sorted_sub_indices,topk = nms(
-                                    boxes = nms_predictions,
-                                    iou_threshold = self.cfg.test_parameters.nms_thres,
-                                    scores = scores,
-                                    category_idxs = category_idxs,
-                                    categories = categories,
-                                    top_k = self.cfg.max_lanes)
 
-                keep = sorted_sub_indices[:topk]
-                predictions = predictions[keep]
+            keep = self.lane_nms(
+                nms_predictions[..., 5:],
+                scores,
+                nms_overlap_thresh=self.cfg.test_parameters.nms_thres,
+                top_k=self.cfg.max_lanes)
+#            keep = keep.squeeze()
+
+            predictions = predictions.index_select(keep)
+#            print("predictions:",predictions)
 
             if predictions.shape[0] == 0:
                 decoded.append([])
                 continue
-
+#            print("predictions:",predictions)
             predictions[:, 5] = paddle.round(predictions[:, 5] * self.n_strips)
+#            print(predictions[:, 5])
             if as_lanes:
                 pred = self.predictions_to_pred(predictions)
             else:
                 pred = predictions
             decoded.append(pred)
-
         return decoded
+

@@ -35,16 +35,15 @@ neck = dict(name='FPN',
             num_outs=3,
             attention=False)
 
-test_parameters = dict(conf_threshold=0.40, nms_thres=50, nms_topk=max_lanes)
+test_parameters = dict(conf_threshold=0.40, nms_thres=0.8, nms_topk=max_lanes)
 
 epochs = 15
 batch_size = 48 
 
-total_iter = (88880 // batch_size + 1) * epochs
-lr_scheduler = dict(name='CosineAnnealingDecay',learning_rate = 0.6e-3, T_max=total_iter)
+lr_scheduler = dict(name='CosineAnnealingDecay',learning_rate = 0.6e-3, T_max=epochs)
 optimizer = dict(name='AdamW')  # 3e-4 for batchsize 8
 
-eval_ep = 3
+eval_ep = 1
 save_ep = epochs
 
 img_norm = dict(mean=[103.939, 116.779, 123.68], std=[1., 1., 1.])
@@ -140,3 +139,4 @@ num_workers = 4
 num_classes = 5
 view = False
 ignore_label = 255
+seg=False

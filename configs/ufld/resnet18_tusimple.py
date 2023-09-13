@@ -117,3 +117,4 @@ num_classes = 6 + 1
 view = False
 ignore_label = 255
 test_json_file='/home/fyj/zky/tusimple/test_label.json'
+seg=False

@@ -160,6 +160,7 @@ class GenerateCLRLine(object):
         self.strip_size = self.img_h / self.n_strips
         self.max_lanes = cfg.max_lanes
         self.offsets_ys = np.arange(self.img_h, -1, -self.strip_size)
+        self.cfg = cfg
         self.training = training
 
         if transforms is None:
@@ -316,6 +317,14 @@ class GenerateCLRLine(object):
 
     def __call__(self, sample):
         img_org = sample['img']
+        if self.cfg.cut_height != 0:
+            new_lanes = []
+            for i in sample['lanes']:
+                lanes = []
+                for p in i:
+                    lanes.append((p[0], p[1] - self.cfg.cut_height))
+                new_lanes.append(lanes)
+            sample.update({'lanes': new_lanes})
         line_strings_org = self.lane_to_linestrings(sample['lanes'])
         line_strings_org = LineStringsOnImage(line_strings_org,
                                               shape=img_org.shape)

@@ -4,15 +4,15 @@ import random
 import logging
 import numpy as np
 import visualdl
+import shutil
 from tqdm import tqdm
-from collections import OrderedDict
+from collections import OrderedDict,deque
 
 import paddle
 import paddle.nn as nn
 import paddle.distributed as dist
 from paddle.distributed import fleet
 from paddle.distributed.fleet.meta_parallel import get_rng_state_tracker
-from paddleseg.utils import logger
 
 from ..hooks import build_hook, Hook
 from ..utils import ModelEMA
@@ -21,7 +21,7 @@ from ..datasets.builder import build_dataloader
 from ..model import build_model
 from ..solver import build_lr_scheduler, build_optimizer
 from ..datasets import IterLoader
-from ..hooks.checkpoint_hook import save
+from ..hooks.checkpoint_hook import save,save_checkpoint
 
 def set_hyrbid_parallel_seed(basic_seed,
                              dp_rank,
@@ -132,6 +132,8 @@ class Trainer(BaseTrainer):
         self.metric = 0
         self.best_metric = 0
         self.best_epoch = 0
+        self.save_model_list = deque()
+        self.best_model_list = deque()
 
         self.epochs = cfg.get('epochs', None)
         self.timestamp = cfg.timestamp
@@ -382,6 +384,14 @@ class Trainer(BaseTrainer):
         if out > self.best_metric:
             self.best_metric = out
             self.best_epoch = self.current_epoch + 1
+            filename = 'best_epoch_{}.pd'.format(self.current_epoch + 1)
+            ckpt_path = os.path.join(self.output_dir, filename)
+            self.best_model_list.append(ckpt_path)
+            save_checkpoint(self.output_dir,self,filename_tmpl='best_epoch_{}.pd',save_optimizer=False,create_symlink=False)
+            if len(self.best_model_list)>1:
+                remove_model = self.best_model_list.popleft()
+                os.unlink(remove_model)
+                self.logger.info(f'remove the previous best model: {remove_model}')
         self.logger.info(f"best accuracy is {self.best_metric}") 
         self.logger.info(f"The epoch of best accuracy is {self.best_epoch}")
 
@@ -400,7 +410,8 @@ class Trainer(BaseTrainer):
             self.current_epoch = checkpoint['epoch']
             self.current_iter = (self.start_epoch - 1) * self.iters_per_epoch
 
-        self.model.set_state_dict(checkpoint['state_dict'])
+        self.load(resume_weight=checkpoint['state_dict'])
+#        self.model.set_state_dict(checkpoint['state_dict'])
         self.optimizer.set_state_dict(checkpoint['optimizer'])
         self.lr_scheduler.set_state_dict(checkpoint['lr_scheduler'])
         #resume ema training
@@ -410,18 +421,41 @@ class Trainer(BaseTrainer):
         self.logger.info('Resume training from {} success!'.format(
             checkpoint_path))
 
-    def load(self, weight_path, export=False):
-        state_dict = paddle.load(weight_path)
+    def load(self, weight_path=None,resume_weight=None):
+        if weight_path is not None:
+            self.logger.info('Loading pretrained model from {}'.format(weight_path))
+            if os.path.exists(weight_path):
+                para_state_dict = paddle.load(weight_path)
+                if 'state_dict' in para_state_dict:
+                    para_state_dict = para_state_dict['state_dict']
+        elif resume_weight is not None:
+            para_state_dict = resume_weight
+        else:
+            raise ValueError('The weight is not invalid')
 
-        if 'state_dict' in state_dict:
-            state_dict = state_dict['state_dict']
-
-        if export:
-            state_dict_ = dict()
-            for k, v in state_dict.items():
-                state_dict_['model.' + k] = v
-            state_dict = state_dict_
-        self.model.set_state_dict(state_dict)   
+        model_state_dict = self.model.state_dict()
+        keys = model_state_dict.keys()
+        num_params_loaded = 0
+        for k in keys:
+            if k == "heads.prior_ys" and para_state_dict[k].dtype == paddle.float64:
+                para_state_dict[k] = para_state_dict[k].astype("float32")
+#                if para_state_dict[k].dtype == paddle.float64:
+#                    print("k:",k)
+            if k not in para_state_dict:
+                self.logger.warning("{} is not in pretrained model".format(k))
+            elif list(para_state_dict[k].shape) != list(model_state_dict[k]
+                                                        .shape):
+                self.logger.warning(
+                    "[SKIP] Shape of pretrained params {} doesn't match.(Pretrained: {}, Actual: {})"
+                    .format(k, para_state_dict[k].shape, model_state_dict[k]
+                            .shape))
+            else:
+                model_state_dict[k] = para_state_dict[k]
+                num_params_loaded += 1
+        self.model.set_dict(model_state_dict)
+        self.logger.info("There are {}/{} variables loaded into {}.".format(
+            num_params_loaded,
+            len(model_state_dict), self.model.__class__.__name__))
 
     def export(self,checkpoint_path,export_rep = False):
         self.load(checkpoint_path)

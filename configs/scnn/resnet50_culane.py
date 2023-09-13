@@ -126,6 +126,8 @@ num_classes = 4 + 1
 exist_num_class = num_classes
 view = False
 ignore_label = 255
+seg=True
+
 
 
 

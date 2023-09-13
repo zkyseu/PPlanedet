@@ -118,3 +118,4 @@ num_workers = 4
 view = False
 ignore_label = 255
 use_visual = True # use visualdl to record training loss and accuracy
+seg=False

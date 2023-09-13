@@ -2,12 +2,20 @@ import paddle
 import paddle.nn.functional as F
 from ..losses.line_iou import line_iou
 
-def cdist(x,y,p = 2):
-    assert x.shape[-1] == y.shape[-1]
-    x = x.unsqueeze(-2).tile((1,y.shape[0],1))
-    y = y.unsqueeze(0).tile((x.shape[0],1,1))
-    distance = F.pairwise_distance(x,y,p=p)
-    return distance
+def cdist_paddle(x1, x2, p=2):
+    assert x1.shape[1] == x2.shape[1]
+    B, M = x1.shape
+    # if p == np.inf:
+    #     dist = np.max(np.abs(x1[:, np.newaxis, :] - x2[np.newaxis, :, :]), axis=-1)
+    if p == 1:
+        dist = paddle.sum(
+            paddle.abs(x1.unsqueeze(axis=1) - x2.unsqueeze(axis=0)), axis=-1)
+    else:
+        dist = paddle.pow(paddle.sum(paddle.pow(
+            paddle.abs(x1.unsqueeze(axis=1) - x2.unsqueeze(axis=0)), p),
+                                     axis=-1),
+                          1 / p)
+    return dist
 
 
 def distance_cost(predictions, targets, img_w):
@@ -32,7 +40,7 @@ def distance_cost(predictions, targets, img_w):
     lengths = (~invalid_masks).sum(axis=1)
     distances = paddle.abs((targets - predictions))
     distances[invalid_masks] = 0.
-    distances = distances.sum(axis=1) / (lengths.astype('float') + 1e-9)
+    distances = distances.sum(axis=1) / (lengths.astype('float32') + 1e-9)
     distances = distances.reshape((num_priors, num_targets))
 
     return distances
@@ -44,14 +52,16 @@ def focal_cost(cls_pred, gt_labels, alpha=0.25, gamma=2, eps=1e-12):
         cls_pred (Tensor): Predicted classification logits, shape
             [num_query, num_class].
         gt_labels (Tensor): Label of `gt_bboxes`, shape (num_gt,).
+
     Returns:
-        paddle.Tensor: cls_cost value
+        torch.Tensor: cls_cost value
     """
     cls_pred = F.sigmoid(cls_pred)
     neg_cost = -(1 - cls_pred + eps).log() * (1 - alpha) * cls_pred.pow(gamma)
     pos_cost = -(cls_pred + eps).log() * alpha * (1 - cls_pred).pow(gamma)
-    cls_cost = paddle.index_select(pos_cost,gt_labels,-1) - paddle.index_select(neg_cost,gt_labels,-1)
-#    cls_cost = pos_cost[:, gt_labels] - neg_cost[:, gt_labels]
+    cls_cost = pos_cost.index_select(
+        gt_labels, axis=1) - neg_cost.index_select(
+            gt_labels, axis=1)
     return cls_cost
 
 
@@ -70,7 +80,7 @@ def dynamic_k_assign(cost, pair_wise_ious):
     ious_matrix[ious_matrix < 0] = 0.
     n_candidate_k = 4
     topk_ious, _ = paddle.topk(ious_matrix, n_candidate_k, axis=0)
-    dynamic_ks = paddle.clip(topk_ious.sum(0).astype('int'), min=1)
+    dynamic_ks = paddle.clip(topk_ious.sum(0).astype('int32'), min=1)
     num_gt = cost.shape[1]
     for gt_idx in range(num_gt):
         _, pos_idx = paddle.topk(cost[:, gt_idx],
@@ -127,12 +137,12 @@ def assign(
     prediction_start_xys = predictions[:, 2:4]
     prediction_start_xys[..., 0] *= (img_h - 1)
 
-    start_xys_score = cdist(prediction_start_xys, target_start_xys,
+    start_xys_score = cdist_paddle(prediction_start_xys, target_start_xys,
                             p=2).reshape((num_priors, num_targets))
     start_xys_score = (1 - start_xys_score / paddle.max(start_xys_score)) + 1e-2
 
     target_thetas = targets[:, 4].unsqueeze(-1)
-    theta_score = cdist(predictions[:, 4].unsqueeze(-1),
+    theta_score = cdist_paddle(predictions[:, 4].unsqueeze(-1),
                         target_thetas,
                         p=1).reshape((num_priors, num_targets)) * 180
     theta_score = (1 - theta_score / paddle.max(theta_score)) + 1e-2

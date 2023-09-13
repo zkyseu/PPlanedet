@@ -2,6 +2,7 @@ import os
 import pickle
 import paddle
 import copy
+import shutil
 
 from .hook import Hook
 from .builder import HOOKS
@@ -35,6 +36,43 @@ def save(state_dicts, file_name):
 
     with open(file_name, 'wb') as f:
         pickle.dump(final_dict, f)
+
+def save_checkpoint(out_dir,
+                    trainer,
+                    filename_tmpl='epoch_{}.pd',
+                    save_optimizer=True,
+                    create_symlink=True):
+    filename = filename_tmpl.format(trainer.current_epoch + 1)
+    filepath = os.path.join(out_dir, filename)
+    optimizer = trainer.optimizer if save_optimizer else None
+    lr_scheduler = trainer.lr_scheduler
+    use_ema = trainer.use_ema
+    if use_ema:
+        model_weights = copy.deepcopy(trainer.model.state_dict())
+        trainer.model.set_dict(trainer.ema.apply())
+    else:
+        model_weights = trainer.model.state_dict()
+
+    if optimizer is not None:
+        save({
+            'epoch': trainer.current_epoch + 1,
+            'state_dict': model_weights,
+            'optimizer': optimizer.state_dict(),
+            'lr_scheduler': lr_scheduler.state_dict(),
+            'ema_model':trainer.model.state_dict() if use_ema else None
+        }, filepath)
+    else:
+        save({
+            'epoch': trainer.current_epoch + 1,
+            'state_dict': model_weights,
+            'ema_model':trainer.model.state_dict() if use_ema else None
+        }, filepath)        
+    # in some environments, `os.symlink` is not supported, you may need to
+    # set `create_symlink` to False
+    if create_symlink:
+        latest = os.path.join(out_dir, 'latest.pd')
+        os.system('rm -rf %s' % latest)
+        os.symlink(filename, latest)
 
 
 @HOOKS.register()
@@ -74,36 +112,6 @@ class CheckpointHook(Hook):
         self.args = kwargs
         self.metric = 0.
 
-    def save_checkpoint(self,
-                        out_dir,
-                        trainer,
-                        filename_tmpl='epoch_{}.pd',
-                        save_optimizer=True,
-                        create_symlink=True):
-        filename = filename_tmpl.format(trainer.current_epoch + 1)
-        filepath = os.path.join(out_dir, filename)
-        optimizer = trainer.optimizer if save_optimizer else None
-        lr_scheduler = trainer.lr_scheduler
-        use_ema = trainer.use_ema
-        if use_ema:
-            model_weights = copy.deepcopy(trainer.model.state_dict())
-            trainer.model.set_dict(trainer.ema.apply())
-        else:
-            model_weights = trainer.model.state_dict()
-        save({
-            'epoch': trainer.current_epoch + 1,
-            'state_dict': model_weights,
-            'optimizer': optimizer.state_dict(),
-            'lr_scheduler': lr_scheduler.state_dict(),
-            'ema_model':trainer.model.state_dict() if use_ema else None
-        }, filepath)
-        # in some environments, `os.symlink` is not supported, you may need to
-        # set `create_symlink` to False
-        if create_symlink:
-            latest = os.path.join(out_dir, 'latest.pd')
-            os.system('rm -rf %s' % latest)
-            os.symlink(filename, latest)
-
     def train_epoch_end(self, trainer):
         if paddle.distributed.get_rank() != 0:
             return
@@ -115,24 +123,20 @@ class CheckpointHook(Hook):
             f'Saving checkpoint at {trainer.current_epoch + 1} epochs')
         if not self.out_dir:
             self.out_dir = trainer.output_dir
-        self.save_checkpoint(
+        save_checkpoint(
             self.out_dir,
             trainer,
             save_optimizer=self.save_optimizer,
             **self.args)
         
         # remove other checkpoints
-        if self.max_keep_ckpts > 0:
-            filename_tmpl = self.args.get('filename_tmpl', 'epoch_{}.pdparams')
-            current_epoch = trainer.current_epoch + 1
-            for epoch in range(current_epoch - self.max_keep_ckpts, 0, -1):
-                ckpt_path = os.path.join(self.out_dir,
-                                         filename_tmpl.format(epoch))
-                if os.path.exists(ckpt_path):
-                    os.remove(ckpt_path)
-                else:
-                    print(ckpt_path)
-                    break
+        filename_tmpl = self.args.get('filename_tmpl', 'epoch_{}.pd')
+        ckpt_path = os.path.join(self.out_dir,
+                                    filename_tmpl.format(trainer.current_epoch + 1))
+        trainer.save_model_list.append(ckpt_path)
+        if len(trainer.save_model_list) > self.max_keep_ckpts > 0:
+            model_to_remove = trainer.save_model_list.popleft()
+            os.unlink(model_to_remove)
 
     def train_iter_end(self, trainer):
         if paddle.distributed.get_rank() != 0:
@@ -145,19 +149,15 @@ class CheckpointHook(Hook):
             f'Saving checkpoint at {trainer.iter + 1} iterations')
         if not self.out_dir:
             self.out_dir = trainer.output_dir
-        trainer.save_checkpoint(
-            self.out_dir, save_optimizer=self.save_optimizer, **self.args)
+        save_checkpoint(
+            self.out_dir, trainer, save_optimizer=self.save_optimizer, **self.args)
 
         # remove other checkpoints
-        if self.max_keep_ckpts > 0:
-            filename_tmpl = self.args.get('filename_tmpl', 'iter_{}.pdparams')
-            current_iter = trainer.iter + 1
-            for _iter in range(
-                    current_iter - self.max_keep_ckpts * self.interval, 0,
-                    -self.interval):
-                ckpt_path = os.path.join(self.out_dir,
-                                         filename_tmpl.format(_iter))
-                if os.path.exists(ckpt_path):
-                    os.remove(ckpt_path)
-                else:
-                    break
+        filename_tmpl = self.args.get('filename_tmpl', 'epoch_{}.pdparams')
+        ckpt_path = os.path.join(self.out_dir,
+                                    filename_tmpl.format(trainer.current_epoch + 1))
+        trainer.save_model_list.append(ckpt_path)
+        if len(trainer.save_model_list) > self.max_keep_ckpts > 0:
+            model_to_remove = trainer.save_model_list.popleft()
+            os.unlink(model_to_remove)
+

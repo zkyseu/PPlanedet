@@ -230,3 +230,4 @@ pred_save_dir = './pred_save'
 num_workers = 4
 view = False
 ignore_label = 255
+seg=False

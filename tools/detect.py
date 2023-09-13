@@ -36,7 +36,7 @@ def mkdir(path):
     if not os.path.exists(sub_dir):
         os.makedirs(sub_dir)
 
-def visualizes(im, result, color_map, save_dir=None, weight=0.6):
+def visualizes(im, result, color_map, weight=0.6):
     """
     Convert predict result to color image, and save added image.
 
@@ -62,14 +62,7 @@ def visualizes(im, result, color_map, save_dir=None, weight=0.6):
 #    im = cv2.imread(image)
     vis_result = cv2.addWeighted(im, weight, pseudo_img, 1 - weight, 0)
 
-    if save_dir is not None:
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
-        image_name = os.path.split(image)[-1]
-        out_path = os.path.join(save_dir, image_name)
-        cv2.imwrite(out_path, vis_result)
-    else:
-        return vis_result
+    return vis_result
 
 class Detect(object):
     def __init__(self, cfg):
