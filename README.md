@@ -8,7 +8,7 @@
 ## 🆕新闻
 在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
 <ul class="nobull">
-  <li>[2023-09-13] :fire: 完成CLRNet的复现，发布CLRNet最新代码以及预训练权重
+  <li>[2023-09-13] :fire: 完成CLRNet的复现，发布CLRNet最新代码以及预训练权重。
   <li>[2023-05-01] : 我们基于DETR提出一个端到端的车道线检测模型<a href="https://github.com/zkyseu/O2SFormer">O2SFormer</a>, 欢迎大家使用！
 
 </ul>
