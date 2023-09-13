@@ -4,3 +4,4 @@ from .dynamic_assign import assign,dynamic_k_assign
 from .Transformer_module import *
 from .norm import *
 from .utils import make_divisible
+from .nms import lane_nms
