@@ -35,7 +35,7 @@ neck = dict(name='FPN',
             num_outs=3,
             attention=False)
 
-test_parameters = dict(conf_threshold=0.40, nms_thres=50, nms_topk=max_lanes)
+test_parameters = dict(conf_threshold=0.40, nms_thres=0.8, nms_topk=max_lanes)
 
 epochs = 70
 batch_size = 24 
