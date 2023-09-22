@@ -221,7 +221,7 @@ class CLRHead(nn.Layer):
             cls_logits = cls_logits.reshape((
                 batch_size, -1, cls_logits.shape[1]))  # (B, num_priors, 2)
             reg = reg.reshape((batch_size, -1, reg.shape[1]))
-
+            
             predictions = priors.clone()
             predictions[:, :, :2] = cls_logits
             predictions[:, :,2:5] += reg[:, :, :3]  # also reg theta angle here
