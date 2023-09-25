@@ -25,7 +25,7 @@ seg_loss_weight = 1.0
 neck = dict(name='DETRTransformer',
             backbone_num_channels=512)
 
-test_parameters = dict(conf_threshold=0.40, nms_thres=0.8, nms_topk=max_lanes)
+test_parameters = dict(conf_threshold=0.40, nms_topk=max_lanes)
 
 epochs = 15
 batch_size = 48 
