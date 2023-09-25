@@ -67,7 +67,8 @@ class DETRHead(nn.Layer):
                                        0,
                                        num=self.n_offsets,
                                        dtype=paddle.float32))
-
+        reg_modules = list()
+        cls_modules = list()
         for _ in range(num_mlp_layers):
             reg_modules += [*LinearModule(hidden_dim)]
             cls_modules += [*LinearModule(hidden_dim)]
@@ -93,7 +94,7 @@ class DETRHead(nn.Layer):
             normal_init(m, mean=0., std=1e-3)
 
 
-    def forward(self, out_transformer, body_feats, inputs=None):
+    def forward(self, out_transformer, **kwargs):
         r"""
         Args:
             out_transformer (Tuple): (feats: [num_levels, batch_size,
@@ -108,16 +109,16 @@ class DETRHead(nn.Layer):
         batch_size = memory.shape[0]
 
         for cls_layer in self.cls_modules:
-            cls_features = cls_layer(feats)
+            cls_features = cls_layer(feats[-1])
         for reg_layer in self.reg_modules:
-            reg_features = reg_layer(feats)
+            reg_features = reg_layer(feats[-1])
 
         cls_logits = self.cls_layers(cls_features)
         reg = self.reg_layers(reg_features)
 
         cls_logits = cls_logits.reshape((
-            batch_size, -1, cls_logits.shape[1]))  # (B, num_priors, 2)
-        reg = reg.reshape((batch_size, -1, reg.shape[1]))
+            batch_size, -1, cls_logits.shape[-1]))  # (B, num_priors, 2)
+        reg = reg.reshape((batch_size, -1, reg.shape[-1]))
 
         predictions = paddle.zeros((batch_size,self.num_priors,self.n_offsets + 1 + 2 + 1 + 2))
 
