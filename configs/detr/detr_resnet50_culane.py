@@ -22,7 +22,7 @@ cls_loss_weight = 2.
 xyt_loss_weight = 0.2
 seg_loss_weight = 1.0
 
-neck = dict(name='DETRTransformer',
+neck = dict(name='Lanedetr_transormer',
             backbone_num_channels=512)
 
 test_parameters = dict(conf_threshold=0.40, nms_topk=max_lanes)
