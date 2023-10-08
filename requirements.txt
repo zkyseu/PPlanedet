@@ -14,7 +14,7 @@ pathspec
 p_tqdm
 yapf
 numpy==1.21.6
-opencv-python==4.5.5.64
-opencv-python-headless==4.5.5.64
+opencv-python<4.3
+opencv-python-headless<4.3
 addict
 imgaug

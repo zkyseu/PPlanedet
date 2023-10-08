@@ -230,7 +230,7 @@ class ResNetWrapper(nn.Layer):
                 replace_stride_with_dilation=[False, False, False],
                 out_conv=False,
                 fea_stride=8,
-                out_channel=128,
+                out_channel=512,
                 in_channels=[64, 128, 256, 512],
                 cfg=None):
         super(ResNetWrapper, self).__init__()
@@ -242,7 +242,6 @@ class ResNetWrapper(nn.Layer):
             replace_stride_with_dilation=replace_stride_with_dilation, in_channels=self.in_channels)
         self.out = None
         if out_conv:
-            out_channel = 512
             for chan in reversed(self.in_channels):
                 if chan < 0: continue
                 out_channel = chan

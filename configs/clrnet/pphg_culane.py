@@ -1,11 +1,14 @@
 model = dict(name='Detector', )
 
 backbone = dict(
-    name='ResNetWrapper',
-    resnet='resnet18',
-    pretrained=True,
-    replace_stride_with_dilation=[False, False, False],
-    out_conv=False,
+    name='PPHGNetV2',
+    arch='L',
+    return_idx=[1,2,3],
+    freeze_stem_only=True,
+    freeze_at=0,
+    freeze_norm=True,
+    lr_mult_list=[0., 0.05, 0.05, 0.05, 0.05],
+    pretrain='https://bj.bcebos.com/v1/paddledet/models/pretrained/PPHGNetV2_L_ssld_pretrained.pdparams'
 )
 
 num_points = 72
@@ -13,19 +16,29 @@ max_lanes = 4
 sample_y = range(589, 230, -20)
 featuremap_out_channel = 192
 
-heads = dict(name='DETRHead',
+heads = dict(name='CLRHead',
+             num_priors=192,
+             refine_layers=3,
+             fc_hidden_dim=64,
+             sample_points=36,
+             seg_decoder=dict(name='PlainDecoder'),
              cls_loss = dict(name = 'FocalLoss_cls',alpha=0.25),
-             liou_loss = dict(name = 'Liou_loss'))
+             liou_loss = dict(name = 'Liou_loss'),
+             ce_loss = dict(name = 'CrossEntropyLoss',
+                   weight = (0.4,1,1,1,1,),))
                    
 iou_loss_weight = 2.
 cls_loss_weight = 2.
 xyt_loss_weight = 0.2
 seg_loss_weight = 1.0
 
-neck = dict(name='Lanedetr_transormer',
-            backbone_num_channels=512)
+neck = dict(name='FPN',
+            in_channels=[512, 1024, 2048],
+            out_channels=64,
+            num_outs=3,
+            attention=False)
 
-test_parameters = dict(conf_threshold=0.40, nms_topk=max_lanes)
+test_parameters = dict(conf_threshold=0.40, nms_thres=0.8, nms_topk=max_lanes)
 
 epochs = 15
 batch_size = 48 
@@ -122,8 +135,8 @@ custom_config = [dict(
 device = 'gpu'
 seed =  0
 save_inference_dir = './inference'
-output_dir = './output_dir'
-best_dir = './output_dir/best_dir'
+output_dir = '/root/paddlejob/workspace/output/'
+best_dir = '/root/paddlejob/workspace/output//best_dir'
 pred_save_dir = './pred_save'
 num_workers = 4
 num_classes = 5

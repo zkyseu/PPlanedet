@@ -208,7 +208,7 @@ class DETRTransformer(nn.Layer):
     __shared__ = ['hidden_dim']
 
     def __init__(self,
-                 num_queries=100,
+                 num_queries=192,
                  position_embed_type='sine',
                  return_intermediate_dec=True,
                  backbone_num_channels=2048,
