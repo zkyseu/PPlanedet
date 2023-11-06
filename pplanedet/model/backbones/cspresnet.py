@@ -5,7 +5,6 @@ from paddle import ParamAttr
 from paddle.regularizer import L2Decay
 from paddle.nn.initializer import Constant
 from paddleseg.models import layers
-from paddleseg.utils import load_entire_model
 
 from ..common_model import swish
 from ..builder import BACKBONES
@@ -289,12 +288,12 @@ class CSPResNet(nn.Layer):
         if out_conv:
             self.out_conv = nn.Conv2D(channels[-1],cfg.featuremap_out_channel,1)
         if pretrain is not None:
-            self.load_pretrain(pretrain)
-
-    def load_pretrain(self,pretrain):
-#        for name,param in self.named_parameters():
-#            print(name)
-        load_entire_model(self,pretrain)
+            if 'http' in pretrain:  #URL
+                path = paddle.utils.download.get_weights_path_from_url(
+                    pretrain)
+            else:  #model in local path
+                path = pretrain
+            self.set_state_dict(paddle.load(path))
     
     def forward(self, inputs):
         x = inputs

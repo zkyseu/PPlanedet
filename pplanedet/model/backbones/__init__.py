@@ -5,3 +5,5 @@ from .convnext import ConvNeXt
 from .mobilenet import MobileNetWrapper
 from .cspresnet import CSPResNet
 from .shufflenet import ShufflNetWrapper
+from .swin import SwinTransformer
+from .pphgv2 import PPHGNetV2
