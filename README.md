@@ -8,7 +8,7 @@
 ## 🆕新闻
 在这个部分中，我们展示PPLanedet中最新的改进，如果您想要了解更多关于PPLanedet的改动，您可以浏览[改动历史](https://github.com/zkyseu/PPlanedet/blob/v5/file/change_log.md)。
 <ul class="nobull">
-  <li>[2024-02-27] :fire: Lane2Seq被CVPR2024接收! 论文将于近日发布至Arxiv。
+  <li>[2024-02-27] :fire: Lane2Seq被CVPR2024接收! 欢迎大家阅读交流, <a href="https://arxiv.org/pdf/2402.17172.pdf">论文地址</a>。
   <li>[2024-02-26] : 我们即将发布v6版本，v6中包含更多的先进车道线检测算法包括ADNet, CLRerNet以及复杂数据集CurveLanes!
   <li>[2024-01-17] : 基于OneFlow框架开源车道线检测工具包<a href="https://github.com/zkyseu/FlowLane">FlowLane</a>, 欢迎大家使用！
   <li>[2023-09-13] :fire: 完成CLRNet的复现，发布CLRNet最新代码以及预训练权重。
